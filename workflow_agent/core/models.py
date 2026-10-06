@@ -16,6 +16,7 @@ class Param:
     required: bool = False
     default: Any = None
     sample_default: Any = None                # bundled demo input (used only if allowed)
+    sample_group: Optional[str] = None        # sample defaults in a group apply only if the user gave none of the group
     extractor: Optional[Callable[[str], Any]] = None   # heuristic: text -> value | None
     items: str = "string"                     # element type when type == "array"
 
