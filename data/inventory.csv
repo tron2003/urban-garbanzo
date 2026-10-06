@@ -1,0 +1,13 @@
+sku,product_name,category,current_stock,minimum_stock,max_stock
+SKU-1001,Classic Cotton T-Shirt (M),Apparel,12,25,100
+SKU-1002,Classic Cotton T-Shirt (L),Apparel,40,25,100
+SKU-1003,Denim Jacket,Apparel,5,10,40
+SKU-1004,Leather Wallet,Accessories,0,15,60
+SKU-1005,Canvas Tote Bag,Accessories,30,30,90
+SKU-1006,Running Shoes (42),Footwear,8,20,80
+SKU-1007,Running Shoes (43),Footwear,22,20,80
+SKU-1008,Wool Scarf,Accessories,3,12,
+SKU-1009,Stainless Water Bottle,Home,60,40,200
+SKU-1010,Yoga Mat,Fitness,14,15,50
+SKU-1011,Bluetooth Speaker,Electronics,abc,10,50
+SKU-1012,Desk Lamp,Home,9,,30

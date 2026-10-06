@@ -15,7 +15,8 @@ from .tools.registry import ToolRegistry, ToolServices
 
 
 class Agent:
-    def __init__(self, settings: Optional[Settings] = None, llm=None, registry: Optional[Registry] = None):
+    def __init__(self, settings: Optional[Settings] = None, llm=None, registry: Optional[Registry] = None,
+                 strict: bool = True):
         self.settings = settings or Settings.from_env()
         self.llm = llm if llm is not None else build_llm(self.settings)
         self.registry = registry or DEFAULT_REGISTRY
@@ -23,9 +24,9 @@ class Agent:
         self.specs: list[WorkflowSpec] = load_workflow_specs(self.settings.workflow_excel)
         self.spec_by_id = {s.id: s for s in self.specs}
         self.tools = ToolRegistry(ToolServices(self.settings, self.llm))
-        errors, self.config_warnings = validate_bindings(self.specs, self.registry, self.tools)
-        if errors:
-            raise WorkflowConfigError(errors)
+        self.binding_errors, self.config_warnings = validate_bindings(self.specs, self.registry, self.tools)
+        if self.binding_errors and strict:      # fail fast: Excel and code must agree
+            raise WorkflowConfigError(self.binding_errors)
         self.engine = WorkflowEngine(self.registry, self.tools, self.settings, self.llm)
 
     # -- direct execution (no routing); used by tests, scripts and the router path --
