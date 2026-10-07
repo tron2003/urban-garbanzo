@@ -128,3 +128,73 @@ def test_offline_llm_raises_and_client_factory(tmp_path):
     assert isinstance(build_llm(s), OfflineLLM)         # misconfigured -> safe offline mode
     with pytest.raises(LLMUnavailable):
         OfflineLLM().chat([])
+
+
+# ---------------- providers: openrouter, vllm, key hygiene ----------------
+def test_openrouter_defaults_and_headers(tmp_path, monkeypatch):
+    from workflow_agent.llm import build_llm
+    monkeypatch.setenv("OPENROUTER_REFERER", "https://example.com")
+    s = make_settings(tmp_path, llm_provider="openrouter", llm_api_key="sk-or-1")
+    c = build_llm(s)
+    assert c.base_url == "https://openrouter.ai/api/v1" and c.model == "openai/gpt-4o-mini"
+    assert c.extra_headers["X-Title"] == "workflow-agent" and c.extra_headers["HTTP-Referer"] == "https://example.com"
+    s.llm_model = "anthropic/claude-3.5-sonnet"
+    assert build_llm(s).model == "anthropic/claude-3.5-sonnet"
+    s.llm_api_key = ""
+    assert isinstance(build_llm(s), OfflineLLM)               # key is required for hosted providers
+
+
+def test_openrouter_sends_bearer_and_attribution_headers_over_http(server, tmp_path):
+    srv = server([{"tool": "wf006_duplicate_product_detection", "args": {}}])
+    llm = OpenAICompatibleClient(srv.url, "sk-or-9", "openai/gpt-4o-mini", 5, "openrouter", {"X-Title": "workflow-agent"})
+    assert Agent(make_settings(tmp_path), llm=llm).handle("dupes?").report.workflow_id == "WF006"
+    assert srv.headers[0]["Authorization"] == "Bearer sk-or-9" and srv.headers[0]["X-Title"] == "workflow-agent"
+    assert srv.requests[0]["model"] == "openai/gpt-4o-mini"
+
+
+def test_vllm_discovers_the_served_model_and_routes(server, tmp_path):
+    from workflow_agent.llm import build_llm
+    srv = server([{"tool": "wf001_inventory_restock_check", "args": {}}], ) 
+    srv.models = ["Qwen/Qwen2.5-7B-Instruct"]
+    s = make_settings(tmp_path, llm_provider="vllm", llm_base_url=srv.url)
+    llm = build_llm(s)
+    assert llm.model == "Qwen/Qwen2.5-7B-Instruct" and llm.name == "vllm:Qwen/Qwen2.5-7B-Instruct"
+    r = Agent(s, llm=llm).handle("what needs reordering")
+    assert r.route.method == "llm-tool-call" and r.report.workflow_id == "WF001"
+    assert srv.requests[0]["model"] == "Qwen/Qwen2.5-7B-Instruct" and "Authorization" not in srv.headers[0]   # no key -> no header
+
+
+def test_vllm_explicit_model_and_unreachable_server_is_offline(tmp_path):
+    from workflow_agent.llm import build_llm
+    s = make_settings(tmp_path, llm_provider="vllm", llm_model="my-model")
+    assert build_llm(s).base_url == "http://localhost:8000/v1" and build_llm(s).model == "my-model"
+    s2 = make_settings(tmp_path, llm_provider="vllm", llm_base_url="http://127.0.0.1:9/v1")
+    assert isinstance(build_llm(s2), OfflineLLM)               # nothing to discover -> safe offline mode
+
+
+def test_api_keys_are_never_sent_to_the_wrong_provider(monkeypatch, tmp_path):
+    from workflow_agent.config import Settings
+    for k in ("LLM_PROVIDER", "LLM_API_KEY", "LLM_BASE_URL", "OPENAI_API_KEY", "OPENROUTER_API_KEY", "VLLM_API_KEY"):
+        monkeypatch.delenv(k, raising=False)
+    monkeypatch.setenv("OPENAI_API_KEY", "sk-openai")
+    monkeypatch.setenv("LLM_PROVIDER", "openrouter")
+    assert Settings.from_env(tmp_path).llm_api_key == ""                      # OpenAI key NOT reused for OpenRouter
+    monkeypatch.setenv("OPENROUTER_API_KEY", "sk-or")
+    assert Settings.from_env(tmp_path).llm_api_key == "sk-or"
+    monkeypatch.setenv("LLM_PROVIDER", "vllm")
+    assert Settings.from_env(tmp_path).llm_api_key == ""
+    monkeypatch.setenv("LLM_API_KEY", "generic")
+    assert Settings.from_env(tmp_path).llm_api_key == "generic"
+
+
+def test_provider_auto_detection(monkeypatch, tmp_path):
+    from workflow_agent.config import Settings
+    for k in ("LLM_PROVIDER", "LLM_API_KEY", "LLM_BASE_URL", "OPENAI_API_KEY", "OPENROUTER_API_KEY", "VLLM_API_KEY"):
+        monkeypatch.delenv(k, raising=False)
+    assert Settings.from_env(tmp_path).llm_provider == "none"
+    monkeypatch.setenv("OPENROUTER_API_KEY", "k")
+    assert Settings.from_env(tmp_path).llm_provider == "openrouter"
+    monkeypatch.setenv("OPENAI_API_KEY", "k")
+    assert Settings.from_env(tmp_path).llm_provider == "openai"
+    monkeypatch.setenv("LLM_BASE_URL", "http://x/v1")
+    assert Settings.from_env(tmp_path).llm_provider == "openai_compatible"

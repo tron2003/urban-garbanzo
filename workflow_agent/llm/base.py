@@ -7,6 +7,7 @@ One tiny interface (``chat``) with two implementations:
 from __future__ import annotations
 
 import json
+import os
 import socket
 import urllib.error
 import urllib.request
@@ -49,7 +50,9 @@ class OfflineLLM(LLMClient):
 class OpenAICompatibleClient(LLMClient):
     available = True
 
-    def __init__(self, base_url: str, api_key: str, model: str, timeout: float = 60.0, label: str = "openai_compatible"):
+    def __init__(self, base_url: str, api_key: str, model: str, timeout: float = 60.0, label: str = "openai_compatible",
+                 extra_headers: Optional[dict] = None):
+        self.extra_headers = dict(extra_headers or {})
         self.base_url = base_url.rstrip("/")
         self.api_key = api_key
         self.model = model
@@ -66,7 +69,7 @@ class OpenAICompatibleClient(LLMClient):
             payload["response_format"] = {"type": "json_object"}
         if max_tokens:
             payload["max_tokens"] = max_tokens
-        headers = {"Content-Type": "application/json"}
+        headers = {"Content-Type": "application/json", **self.extra_headers}
         if self.api_key:
             headers["Authorization"] = f"Bearer {self.api_key}"
         req = urllib.request.Request(f"{self.base_url}/chat/completions",
@@ -104,19 +107,45 @@ class OpenAICompatibleClient(LLMClient):
         return LLMResponse(content=msg.get("content") or "", tool_calls=calls)
 
 
+# provider -> (default base URL, default model, API key required)
+PROVIDERS = {
+    "openai": ("https://api.openai.com/v1", "gpt-4o-mini", True),
+    "openrouter": ("https://openrouter.ai/api/v1", "openai/gpt-4o-mini", True),
+    "vllm": ("http://localhost:8000/v1", "", False),          # model = the name vLLM serves (auto-discovered if unset)
+    "ollama": ("http://localhost:11434/v1", "", False),
+    "lmstudio": ("http://localhost:1234/v1", "", False),
+    "openai_compatible": ("", "", False),
+}
+
+
+def _discover_model(base_url: str, api_key: str) -> str:
+    """Ask a local server (vLLM, Ollama, LM Studio) which model it is serving: GET /models -> first id."""
+    req = urllib.request.Request(base_url.rstrip("/") + "/models",
+                                 headers={"Authorization": f"Bearer {api_key}"} if api_key else {})
+    try:
+        with urllib.request.urlopen(req, timeout=3) as resp:
+            data = json.loads(resp.read().decode("utf-8"))
+        return str(data["data"][0]["id"])
+    except Exception:
+        return ""
+
+
 def build_llm(settings) -> LLMClient:
     provider = (settings.llm_provider or "none").lower()
-    if provider in ("none", "off", "offline", ""):
+    if provider not in PROVIDERS:
         return OfflineLLM()
-    if provider == "openai":
-        if not settings.llm_api_key:
-            return OfflineLLM()
-        return OpenAICompatibleClient(settings.llm_base_url or "https://api.openai.com/v1",
-                                      settings.llm_api_key, settings.llm_model or "gpt-4o-mini",
-                                      settings.llm_timeout, "openai")
-    if provider in ("openai_compatible", "ollama", "lmstudio"):
-        base = settings.llm_base_url or ("http://localhost:11434/v1" if provider == "ollama" else "")
-        if not base or not settings.llm_model:
-            return OfflineLLM()
-        return OpenAICompatibleClient(base, settings.llm_api_key, settings.llm_model, settings.llm_timeout, provider)
-    return OfflineLLM()
+    default_base, default_model, key_required = PROVIDERS[provider]
+    base = settings.llm_base_url or default_base
+    if not base or (key_required and not settings.llm_api_key):
+        return OfflineLLM()
+    model = settings.llm_model or default_model
+    if not model and not key_required:
+        model = _discover_model(base, settings.llm_api_key)
+    if not model:
+        return OfflineLLM()
+    headers = {}
+    if provider == "openrouter":               # optional attribution headers recommended by OpenRouter
+        headers["X-Title"] = os.environ.get("OPENROUTER_APP_TITLE", "workflow-agent")
+        if os.environ.get("OPENROUTER_REFERER"):
+            headers["HTTP-Referer"] = os.environ["OPENROUTER_REFERER"]
+    return OpenAICompatibleClient(base, settings.llm_api_key, model, settings.llm_timeout, provider, headers)

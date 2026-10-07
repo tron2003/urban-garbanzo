@@ -53,21 +53,32 @@ python -m workflow_agent                                        # interactive ch
 python -m workflow_agent --list                                 # workflows as read from the Excel file
 python -m workflow_agent --validate                             # Excel <-> code <-> tools consistency check
 python -m workflow_agent --examples                             # run the 10 Test_Questions + 22 scenarios -> examples/outputs/
-python -m pytest                                                # 170 tests
+python -m pytest                                                # 176 tests
 python -m workflow_agent "Where is order ORD-1001?" --json      # machine-readable result
 python -m workflow_agent --workflow WF001 --param threshold=30 x   # skip routing, set parameters explicitly
 ```
 
 ### Enabling an LLM (optional)
 
-Copy `.env.example` to `.env`. Any OpenAI-compatible endpoint works:
+Copy `.env.example` to `.env`. Supported `LLM_PROVIDER` values: `openai`, `openrouter`, `vllm`, `ollama`,
+`lmstudio`, `openai_compatible` (any other OpenAI-style server) or `none`.
 
 ```
-# OpenAI                                   # local Ollama
-LLM_PROVIDER=openai                        LLM_PROVIDER=openai_compatible
-OPENAI_API_KEY=sk-...                      LLM_BASE_URL=http://localhost:11434/v1
-LLM_MODEL=gpt-4o-mini                      LLM_MODEL=llama3.1
+# OpenAI                                   # OpenRouter
+LLM_PROVIDER=openai                        LLM_PROVIDER=openrouter
+OPENAI_API_KEY=sk-...                      OPENROUTER_API_KEY=sk-or-...
+LLM_MODEL=gpt-4o-mini                      LLM_MODEL=openai/gpt-4o-mini
+
+# vLLM (started with --enable-auto-tool-choice --tool-call-parser <parser>)     # local Ollama
+LLM_PROVIDER=vllm                          LLM_PROVIDER=ollama
+LLM_BASE_URL=http://localhost:8000/v1      LLM_BASE_URL=http://localhost:11434/v1
+LLM_MODEL=<served model name>  (optional)  LLM_MODEL=llama3.1
 ```
+
+Each provider uses only its own key variable (`OPENAI_API_KEY`, `OPENROUTER_API_KEY`, `VLLM_API_KEY`) or the generic
+`LLM_API_KEY`, so one provider's key is never sent to another. For vLLM and other local servers an empty `LLM_MODEL`
+is auto-discovered from `GET /v1/models`. The chosen model must support tool calling for the LLM router to work;
+otherwise the agent falls back to the heuristic router and says so.
 
 With an LLM the agent uses **tool calling** to choose the workflow and extract parameters, and uses the model for
 WF004 / WF007 content and low-confidence WF008 keywords. Without one (or if it fails) everything still runs through
@@ -192,13 +203,13 @@ workflow_agent/
   workflows/        wf001 ... wf010 + common helpers
   llm/              OfflineLLM + OpenAI-compatible client (stdlib only)
   formatting.py     text / markdown / JSON renderers      cli.py   command line
-tests/           170 tests            examples/   scenarios + saved outputs        scripts/   sample-log generator
+tests/           176 tests            examples/   scenarios + saved outputs        scripts/   sample-log generator
 docs/            ARCHITECTURE.md, LOOM_SCRIPT.md
 ```
 
 ## Verification and honest limits
 
-* `python -m pytest`: 170 tests, all pass, no network or API key needed. They cover every workflow's rules and edge
+* `python -m pytest`: 176 tests, all pass, no network or API key needed. They cover every workflow's rules and edge
   cases (boundaries such as exactly-10% and stock == minimum), error paths, the Excel loader and startup validation,
   routing, multi-turn clarification, renderers, the CLI, and the 11th-workflow claim.
 * The **LLM code paths were tested against a local fake OpenAI-compatible HTTP server** (real HTTP client, tool-call

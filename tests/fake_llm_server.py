@@ -5,14 +5,22 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 
 
 class FakeLLM:
-    def __init__(self, replies):
+    def __init__(self, replies, models=None):
         """replies: list of dicts: {'tool': name, 'args': {...}} | {'content': str} | {'status': 500} | {'raw': str}"""
-        self.replies, self.requests, self.headers = list(replies), [], []
+        self.replies, self.requests, self.headers, self.models = list(replies), [], [], models or []
         outer = self
 
         class H(BaseHTTPRequestHandler):
             def log_message(self, *a):
                 pass
+
+            def do_GET(self):
+                if self.path.endswith("/models"):
+                    payload = json.dumps({"data": [{"id": m} for m in outer.models]}).encode()
+                    self.send_response(200); self.send_header("Content-Type", "application/json"); self.end_headers()
+                    self.wfile.write(payload)
+                else:
+                    self.send_response(404); self.end_headers()
 
             def do_POST(self):
                 body = json.loads(self.rfile.read(int(self.headers["Content-Length"])))

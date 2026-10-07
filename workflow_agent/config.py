@@ -82,10 +82,20 @@ class Settings:
         env = os.environ.get
 
         provider = (env("LLM_PROVIDER") or "").strip().lower()
-        api_key = env("LLM_API_KEY") or env("OPENAI_API_KEY") or ""
         base_url = env("LLM_BASE_URL") or ""
-        if not provider:
-            provider = "openai" if api_key else ("openai_compatible" if base_url else "none")
+        if not provider:                       # auto-detect from whatever is configured
+            if base_url:
+                provider = "openai_compatible"
+            elif env("OPENAI_API_KEY"):
+                provider = "openai"
+            elif env("OPENROUTER_API_KEY"):
+                provider = "openrouter"
+            else:
+                provider = "none"
+        # the generic LLM_API_KEY wins; otherwise only the key that belongs to the chosen provider is used,
+        # so an OpenAI key is never sent to OpenRouter / a local server by accident
+        key_env = {"openai": "OPENAI_API_KEY", "openrouter": "OPENROUTER_API_KEY", "vllm": "VLLM_API_KEY"}.get(provider)
+        api_key = env("LLM_API_KEY") or (env(key_env) if key_env else "") or ""
 
         return cls(
             base_dir=base,
