@@ -98,7 +98,7 @@ def identify(ctx):
     ctx.state["low"] = low
     at_min = [r["sku"] for r in ctx.state["rows"] if r["current_stock"] == r["minimum_stock"]]
     if at_min:
-        ctx.decide("stock equal to minimum", "not flagged", f"{', '.join(at_min)} sit exactly at the minimum")
+        ctx.decide("stock equal to minimum", "not flagged", f"{', '.join(at_min)} at exactly the minimum")
     return f"{len(low)} low-stock product(s), most critical first"
 
 
