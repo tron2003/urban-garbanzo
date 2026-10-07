@@ -1,0 +1,10 @@
+[
+  {"order_id": "ORD-1001", "carrier": "DHL", "tracking_number": "DHL-7788123400", "status": "In transit",
+   "eta": "2026-10-10", "last_event": "Departed sorting hub - Frankfurt (2026-10-05)"},
+  {"order_id": "ORD-1003", "carrier": "FedEx", "tracking_number": "FDX-5521009876", "status": "Delivered",
+   "eta": "2026-09-19", "last_event": "Delivered to front desk (2026-09-19)"},
+  {"order_id": "ORD-1004", "carrier": "UPS", "tracking_number": "UPS-1Z999AA10123456784", "status": "Out for delivery",
+   "eta": "2026-10-07", "last_event": "Out for delivery - Mohali hub (2026-10-07)", "simulated_failures": 1},
+  {"order_id": "ORD-1007", "carrier": "BlueDart", "tracking_number": "BD-2200145599", "status": "In transit",
+   "eta": "2026-10-09", "last_event": "Arrived at Chandigarh facility (2026-10-06)", "simulated_failures": 99}
+]

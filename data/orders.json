@@ -1,0 +1,23 @@
+[
+  {"order_id": "ORD-1001", "customer_name": "Ana Silva", "customer_email": "ana.silva@example.com", "status": "Shipped",
+   "placed_at": "2026-09-28", "total": 109.97, "currency": "USD",
+   "items": [{"sku": "SKU-1003", "name": "Denim Jacket", "qty": 1}, {"sku": "SKU-1008", "name": "Wool Scarf", "qty": 1}, {"sku": "SKU-1001", "name": "Classic Cotton T-Shirt (M)", "qty": 1}]},
+  {"order_id": "ORD-1002", "customer_name": "Ben Carter", "customer_email": "ben.carter@example.com", "status": "Processing",
+   "placed_at": "2026-10-05", "total": 89.90, "currency": "USD",
+   "items": [{"sku": "SKU-1006", "name": "Running Shoes (42)", "qty": 1}]},
+  {"order_id": "ORD-1003", "customer_name": "Chloe Dubois", "customer_email": "chloe.dubois@example.com", "status": "Delivered",
+   "placed_at": "2026-09-15", "total": 45.00, "currency": "USD",
+   "items": [{"sku": "SKU-1004", "name": "Leather Wallet", "qty": 1}]},
+  {"order_id": "ORD-1004", "customer_name": "Dev Patel", "customer_email": "dev.patel@example.com", "status": "Shipped",
+   "placed_at": "2026-10-01", "total": 59.00, "currency": "USD",
+   "items": [{"sku": "SKU-1011", "name": "Bluetooth Speaker", "qty": 1}]},
+  {"order_id": "ORD-1005", "customer_name": "Elena Rossi", "customer_email": "elena.rossi@example.com", "status": "Cancelled",
+   "placed_at": "2026-09-30", "total": 29.00, "currency": "USD",
+   "items": [{"sku": "SKU-1010", "name": "Yoga Mat", "qty": 1}]},
+  {"order_id": "ORD-1006", "customer_name": "Ana Silva", "customer_email": "ana.silva@example.com", "status": "Processing",
+   "placed_at": "2026-10-06", "total": 18.00, "currency": "USD",
+   "items": [{"sku": "SKU-1009", "name": "Stainless Water Bottle", "qty": 1}]},
+  {"order_id": "ORD-1007", "customer_name": "Farid Khan", "customer_email": "farid.khan@example.com", "status": "Shipped",
+   "placed_at": "2026-10-02", "total": 24.00, "currency": "USD",
+   "items": [{"sku": "SKU-1008", "name": "Wool Scarf", "qty": 1}]}
+]
