@@ -32,4 +32,4 @@ def settings(tmp_path):
 @pytest.fixture
 def agent(settings):
     """Offline agent (no LLM) writing into a temp dir - fully deterministic."""
-    return Agent(settings, llm=OfflineLLM(), strict=False)
+    return Agent(settings, llm=OfflineLLM())      # strict: Excel and code must agree
