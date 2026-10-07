@@ -87,7 +87,7 @@ def parse_date(text: Any, today: Optional[date] = None) -> Optional[date]:
             return date(int(m[1]), int(m[2]), int(m[3]))
         except ValueError:
             return None
-    m = re.fullmatch(r"(\d{1,2})\s+([a-z]{3,9})\.?,?\s+(\d{4})", s)
+    m = re.fullmatch(r"(\d{1,2})(?:st|nd|rd|th)?\s+([a-z]{3,9})\.?,?\s+(\d{4})", s)
     if m and m[2] in _MONTHS:
         try:
             return date(int(m[3]), _MONTHS[m[2]], int(m[1]))
@@ -99,6 +99,12 @@ def parse_date(text: Any, today: Optional[date] = None) -> Optional[date]:
             return date(int(m[3]), _MONTHS[m[1]], int(m[2]))
         except ValueError:
             return None
+    m = re.fullmatch(r"([a-z]{3,9})\.?\s+(\d{1,2})(?:st|nd|rd|th)?", s) or None
+    if m and m[1] in _MONTHS:
+        return _next_occurrence(_MONTHS[m[1]], int(m[2]), today)
+    m = re.fullmatch(r"(\d{1,2})(?:st|nd|rd|th)?\s+([a-z]{3,9})\.?", s)
+    if m and m[2] in _MONTHS:
+        return _next_occurrence(_MONTHS[m[2]], int(m[1]), today)
     if s in ("today", "eod", "end of day"):
         return today
     if s == "tomorrow":
@@ -113,10 +119,24 @@ def parse_date(text: Any, today: Optional[date] = None) -> Optional[date]:
     return None
 
 
+def _next_occurrence(month: int, day: int, today: date) -> Optional[date]:
+    """'Nov 1' with no year -> the next Nov 1 on or after today."""
+    for year in (today.year, today.year + 1):
+        try:
+            d = date(year, month, day)
+        except ValueError:
+            return None
+        if d >= today:
+            return d
+    return None
+
+
+_MONTH_RX = (r"(?:jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may|june?|july?|aug(?:ust)?|"
+             r"sep(?:t(?:ember)?)?|oct(?:ober)?|nov(?:ember)?|dec(?:ember)?)")
 _DATE_TOKEN = re.compile(
     r"\d{4}-\d{1,2}-\d{1,2}"
-    r"|\d{1,2}\s+[A-Za-z]{3,9}\.?,?\s+\d{4}"
-    r"|[A-Za-z]{3,9}\.?\s+\d{1,2}(?:st|nd|rd|th)?,?\s+\d{4}")
+    rf"|\b\d{{1,2}}(?:st|nd|rd|th)?\s+{_MONTH_RX}\b\.?(?:,?\s+\d{{4}})?(?!\d)"
+    rf"|\b{_MONTH_RX}\b\.?\s+\d{{1,2}}(?:st|nd|rd|th)?(?:,?\s+\d{{4}})?(?!\d)", re.I)
 
 
 def find_dates(text: str, today: Optional[date] = None) -> list[date]:

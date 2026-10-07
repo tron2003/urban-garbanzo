@@ -50,4 +50,6 @@ def product_data_reader(svc, op: str = "select", path: str = "", skus: Optional[
             how = f"collection contains '{collection}'"
         else:
             selected, how = [], f"collection '{collection}' (no collection column)"
-    return {"products": selected, "total": len(products), "selection": how, "columns": cols}
+    collections = sorted({p.get("collection", "") for p in products if p.get("collection")})
+    return {"products": selected, "total": len(products), "selection": how, "columns": cols,
+            "collections": collections}

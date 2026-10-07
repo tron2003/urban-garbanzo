@@ -103,3 +103,16 @@ class RunContext:
             return str(path.relative_to(self.settings.base_dir))
         except ValueError:
             return str(path)
+
+    def write_text_artifact(self, filename: str, text: str) -> str:
+        run_dir = self.settings.output_dir / self.run_id
+        run_dir.mkdir(parents=True, exist_ok=True)
+        path = run_dir / filename
+        try:
+            path.write_text(text, encoding="utf-8")
+        except OSError as exc:
+            raise StepError(f"Could not write output file {filename}: {exc}") from exc
+        try:
+            return str(path.relative_to(self.settings.base_dir))
+        except ValueError:
+            return str(path)
