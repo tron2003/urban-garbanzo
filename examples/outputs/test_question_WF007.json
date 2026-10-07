@@ -1,0 +1,105 @@
+[{
+  "request": "Create a campaign brief for the new collection.",
+  "kind": "needs_input",
+  "message": "Before I write the brief I need: campaign goal and campaign dates (start and end). For example: 'Goal: increase autumn sales, from 2026-11-01 to 2026-11-30'. Audience and promotion are optional.",
+  "routing": {
+    "workflow_id": "WF007",
+    "method": "heuristic",
+    "confidence": 0.778,
+    "reason": "matched: campaign, brief, collection, create, <collection found>",
+    "note": "",
+    "candidates": [
+      [
+        "WF007",
+        0.778
+      ],
+      [
+        "WF004",
+        0.035
+      ],
+      [
+        "WF001",
+        0.0
+      ]
+    ]
+  },
+  "run": {
+    "run_id": "20261007-072100-ef75c2",
+    "workflow_id": "WF007",
+    "workflow_name": "Marketing Campaign Brief",
+    "status": "needs_input",
+    "duration_ms": 0.0,
+    "parameters": {
+      "collection": "new",
+      "products_file": "data/products.csv"
+    },
+    "parameter_sources": {
+      "collection": "user",
+      "products_file": "sample"
+    },
+    "steps": [
+      {
+        "index": 1,
+        "name": "Validate inputs",
+        "status": "needs_input",
+        "duration_ms": 0.0,
+        "detail": "",
+        "error": "Before I write the brief I need: campaign goal and campaign dates (start and end). For example: 'Goal: increase autumn sales, from 2026-11-01 to 2026-11-30'. Audience and promotion are optional."
+      },
+      {
+        "index": 2,
+        "name": "identify campaign objective",
+        "status": "skipped",
+        "duration_ms": 0.0,
+        "detail": "",
+        "error": ""
+      },
+      {
+        "index": 3,
+        "name": "summarize products",
+        "status": "skipped",
+        "duration_ms": 0.0,
+        "detail": "",
+        "error": ""
+      },
+      {
+        "index": 4,
+        "name": "create messaging",
+        "status": "skipped",
+        "duration_ms": 0.0,
+        "detail": "",
+        "error": ""
+      },
+      {
+        "index": 5,
+        "name": "create channel recommendations",
+        "status": "skipped",
+        "duration_ms": 0.0,
+        "detail": "",
+        "error": ""
+      },
+      {
+        "index": 6,
+        "name": "create campaign checklist",
+        "status": "skipped",
+        "duration_ms": 0.0,
+        "detail": "",
+        "error": ""
+      }
+    ],
+    "decisions": [
+      {
+        "step": "Validate inputs",
+        "name": "goal and dates present",
+        "outcome": "no - asking before generating",
+        "detail": "Excel rule: request missing goal/dates first"
+      }
+    ],
+    "tool_calls": [],
+    "warnings": [],
+    "error": "",
+    "error_hint": "",
+    "clarification": "Before I write the brief I need: campaign goal and campaign dates (start and end). For example: 'Goal: increase autumn sales, from 2026-11-01 to 2026-11-30'. Audience and promotion are optional.",
+    "result": null
+  }
+}]

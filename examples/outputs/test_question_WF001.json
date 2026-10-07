@@ -1,0 +1,242 @@
+[{
+  "request": "Which products need restocking?",
+  "kind": "completed",
+  "message": "",
+  "routing": {
+    "workflow_id": "WF001",
+    "method": "heuristic",
+    "confidence": 0.434,
+    "reason": "matched: reorder, product",
+    "note": "",
+    "candidates": [
+      [
+        "WF001",
+        0.434
+      ],
+      [
+        "WF004",
+        0.09
+      ],
+      [
+        "WF006",
+        0.084
+      ]
+    ]
+  },
+  "run": {
+    "run_id": "20261007-072100-63e0bc",
+    "workflow_id": "WF001",
+    "workflow_name": "Inventory Restock Check",
+    "status": "success",
+    "duration_ms": 3.1,
+    "parameters": {
+      "inventory_file": "data/inventory.csv"
+    },
+    "parameter_sources": {
+      "inventory_file": "sample"
+    },
+    "steps": [
+      {
+        "index": 1,
+        "name": "Load inventory",
+        "status": "success",
+        "duration_ms": 2.3,
+        "detail": "Loaded 12 rows from inventory.csv (bundled sample data); 2 invalid",
+        "error": ""
+      },
+      {
+        "index": 2,
+        "name": "compare current stock with minimum threshold",
+        "status": "success",
+        "duration_ms": 0.0,
+        "detail": "6 product(s) below minimum",
+        "error": ""
+      },
+      {
+        "index": 3,
+        "name": "identify low-stock products",
+        "status": "success",
+        "duration_ms": 0.0,
+        "detail": "6 low-stock product(s), most critical first",
+        "error": ""
+      },
+      {
+        "index": 4,
+        "name": "calculate reorder quantity",
+        "status": "success",
+        "duration_ms": 0.0,
+        "detail": "Reorder quantity computed for 6 product(s)",
+        "error": ""
+      },
+      {
+        "index": 5,
+        "name": "generate restock list",
+        "status": "success",
+        "duration_ms": 0.6,
+        "detail": "Restock list with 6 product(s) saved to examples/outputs/artifacts/20261007-072100-63e0bc/restock_list.csv",
+        "error": ""
+      }
+    ],
+    "decisions": [
+      {
+        "step": "compare current stock with minimum threshold",
+        "name": "current_stock < minimum_stock",
+        "outcome": "6 of 10 products below minimum",
+        "detail": "strictly less-than; basis: per-product minimum_stock"
+      },
+      {
+        "step": "identify low-stock products",
+        "name": "stock equal to minimum",
+        "outcome": "not flagged",
+        "detail": "SKU-1005 at exactly the minimum"
+      },
+      {
+        "step": "calculate reorder quantity",
+        "name": "reorder target",
+        "outcome": "fallback used",
+        "detail": "no valid max_stock for some products; target = 2 x minimum_stock"
+      }
+    ],
+    "tool_calls": [
+      {
+        "tool": "csv_reader",
+        "operation": "read",
+        "step": "Load inventory",
+        "status": "ok",
+        "attempts": 1,
+        "duration_ms": 2.1,
+        "error": ""
+      },
+      {
+        "tool": "calculator",
+        "operation": "shortfall_ceiling",
+        "step": "calculate reorder quantity",
+        "status": "ok",
+        "attempts": 1,
+        "duration_ms": 0.0,
+        "error": ""
+      }
+    ],
+    "warnings": [
+      "2 inventory row(s) skipped: SKU-1011 (current_stock 'abc' is not a number), SKU-1012 (minimum_stock is missing)"
+    ],
+    "error": "",
+    "error_hint": "",
+    "clarification": null,
+    "result": {
+      "summary": "6 of 10 products need restocking (312 units to order in total).",
+      "data": {
+        "restock": [
+          {
+            "sku": "SKU-1004",
+            "current_stock": 0,
+            "minimum_stock": 15,
+            "reorder_qty": 60
+          },
+          {
+            "sku": "SKU-1008",
+            "current_stock": 3,
+            "minimum_stock": 12,
+            "reorder_qty": 21
+          },
+          {
+            "sku": "SKU-1006",
+            "current_stock": 8,
+            "minimum_stock": 20,
+            "reorder_qty": 72
+          },
+          {
+            "sku": "SKU-1001",
+            "current_stock": 12,
+            "minimum_stock": 25,
+            "reorder_qty": 88
+          },
+          {
+            "sku": "SKU-1003",
+            "current_stock": 5,
+            "minimum_stock": 10,
+            "reorder_qty": 35
+          },
+          {
+            "sku": "SKU-1010",
+            "current_stock": 14,
+            "minimum_stock": 15,
+            "reorder_qty": 36
+          }
+        ],
+        "evaluated": 10,
+        "skipped": [
+          "SKU-1011 (current_stock 'abc' is not a number)",
+          "SKU-1012 (minimum_stock is missing)"
+        ]
+      },
+      "artifacts": [
+        "examples/outputs/artifacts/20261007-072100-63e0bc/restock_list.csv"
+      ],
+      "tables": [
+        {
+          "title": "Products requiring restock",
+          "columns": [
+            "SKU",
+            "Product",
+            "Current stock",
+            "Minimum",
+            "Suggested reorder qty",
+            "Target basis"
+          ],
+          "rows": [
+            [
+              "SKU-1004",
+              "Leather Wallet",
+              0,
+              15,
+              60,
+              "max_stock"
+            ],
+            [
+              "SKU-1008",
+              "Wool Scarf",
+              3,
+              12,
+              21,
+              "2 x minimum"
+            ],
+            [
+              "SKU-1006",
+              "Running Shoes (42)",
+              8,
+              20,
+              72,
+              "max_stock"
+            ],
+            [
+              "SKU-1001",
+              "Classic Cotton T-Shirt (M)",
+              12,
+              25,
+              88,
+              "max_stock"
+            ],
+            [
+              "SKU-1003",
+              "Denim Jacket",
+              5,
+              10,
+              35,
+              "max_stock"
+            ],
+            [
+              "SKU-1010",
+              "Yoga Mat",
+              14,
+              15,
+              36,
+              "max_stock"
+            ]
+          ]
+        }
+      ],
+      "text_blocks": []
+    }
+  }
+}]

@@ -1,0 +1,26 @@
+==============================================================================
+ Request: Create a campaign brief for the new collection.
+==============================================================================
+ Selected workflow : WF007 - Marketing Campaign Brief
+ Routing           : heuristic, confidence 0.78
+ Why               : matched: campaign, brief, collection, create, <collection found>
+ Runner-up         : WF004 (0.04)
+ Parameters        : collection=new; products_file=data/products.csv [bundled sample]
+
+Steps executed
+  1. [ASK ] Validate inputs  (0 ms)
+        ! Before I write the brief I need: campaign goal and campaign dates (start and end). For example: 'Goal: increase autumn sales, from 2026-11-01 to 2026-11-30'. Audience and promotion are optional.
+  2. [skip] identify campaign objective
+  3. [skip] summarize products
+  4. [skip] create messaging
+  5. [skip] create channel recommendations
+  6. [skip] create campaign checklist
+
+Conditions / decisions   [Excel rule: If campaign goal or dates are missing, request them before generating the brief]
+  - goal and dates present: no - asking before generating  (Excel rule: request missing goal/dates first)
+
+Tools / API calls
+  (none)
+
+Result  [NEEDS INPUT, 0 ms total]
+  I need more information: Before I write the brief I need: campaign goal and campaign dates (start and end). For example: 'Goal: increase autumn sales, from 2026-11-01 to 2026-11-30'. Audience and promotion are optional.

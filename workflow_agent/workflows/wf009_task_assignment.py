@@ -64,11 +64,19 @@ def _deadline(text: str):
 
 
 def _task(text: str):
+    """Pick the task text out of the request: 'task: ...', quoted text, or whatever follows a colon."""
     kv = kv_extractor(["task description", "task"], ["skills", "deadline", "priority", "hours", "due"])(text)
     if kv:
         return kv
     m = re.search(r"[\"\u201c](.{12,}?)[\"\u201d]", text or "")
-    return m.group(1).strip() if m else None
+    if m:
+        return m.group(1).strip()
+    if ":" in (text or ""):                                   # "Assign this task to the best developer: fix the login bug"
+        head, _, tail = text.partition(":")
+        tail = re.sub(r"[,;]?\s*\d+(?:\.\d+)?\s*(?:hours?|hrs?|h)\b.*$", "", tail.strip(), flags=re.I).strip(" ,;.")
+        if re.search(r"\b(assign|task|ticket|bug|delegate|allocate|give)\b", head, re.I) and len(tail.split()) >= 3:
+            return tail
+    return None
 
 
 wf = WorkflowModule(

@@ -1,0 +1,41 @@
+==============================================================================
+ Request: What is the status of order ORD-1004?
+==============================================================================
+ Selected workflow : WF005 - Customer Order Status
+ Routing           : heuristic, confidence 0.74
+ Why               : matched: order, statu, ord, <order_id found>
+ Runner-up         : WF001 (0.00)
+ Parameters        : order_id=ORD-1004
+
+Steps executed
+  1. [OK  ] Validate identifier  (0 ms)
+        Using ORD-1004
+  2. [OK  ] search order data  (0 ms)
+        Found 1 order(s)
+  3. [OK  ] retrieve order status  (0 ms)
+        ORD-1004: Shipped
+  4. [OK  ] retrieve shipment information  (200 ms)
+        ORD-1004: tracking found
+  5. [OK  ] summarize current status  (0 ms)
+        Summarized 1 order(s)
+
+Conditions / decisions   [Excel rule: If no order is found, ask for another identifier]
+  - identifier type: order id
+  - order found: yes  (1 order(s) for ORD-1004)
+
+Tools / API calls
+  order_api.search x1 (0 ms)
+  shipment_lookup x1 (200 ms) - succeeded after retry (2 attempts)
+
+Result  [SUCCESS, 200 ms total]
+  ORD-1004 is shipped - out for delivery via UPS (tracking UPS-1Z999AA10123456784), ETA 2026-10-07.
+
+  Order status & shipment
+  Order    | Status  | Carrier | Tracking #             | Shipment         | ETA        | Last event / note
+  ---------+---------+---------+------------------------+------------------+------------+-------------------------------------------
+  ORD-1004 | Shipped | UPS     | UPS-1Z999AA10123456784 | Out for delivery | 2026-10-07 | Out for delivery - Mohali hub (2026-10-07)
+
+  Items
+  Order    | Item              | SKU      | Qty
+  ---------+-------------------+----------+----
+  ORD-1004 | Bluetooth Speaker | SKU-1011 | 1

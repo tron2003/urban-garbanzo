@@ -1,0 +1,11 @@
+group,confidence,sku,product
+G1,DEFINITE,CAT-003,Samsung Galaxy S22 256GB
+G1,DEFINITE,CAT-003,Galaxy S22 256 GB (Samsung)
+G2,DEFINITE,CAT-004,Cotton T-Shirt Red M
+G2,DEFINITE,cat 004,Basic Cotton Tee Red (M)
+G3,POSSIBLE (high),CAT-010,Leather Wallet Brown
+G3,POSSIBLE (high),CAT-011,Brown Leather Wallet
+G4,POSSIBLE (high),CAT-001,Apple iPhone 13 128GB Black
+G4,POSSIBLE (high),CAT-002,iPhone 13 (128 GB) - Black
+G5,POSSIBLE (medium),CAT-020,Stainless Steel Water Bottle 750ml
+G5,POSSIBLE (medium),CAT-021,Aqua Stainless Water Bottle 750 ml

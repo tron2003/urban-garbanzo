@@ -1,0 +1,5 @@
+keyword,monthly_searches,intent,intent_source,category,priority,recommended_target_page
+buy denim jacket,,transactional,rules,Apparel,high,/collections/apparel
+denim jacket men,,commercial,rules,Apparel,medium,/collections/apparel
+how to wash denim,,informational,rules,Apparel,low,"/blog/how-to-wash-denim (new guide, link to /collections/apparel)"
+nike official site,,navigational,rules,Uncategorized,low,No matching page - review manually

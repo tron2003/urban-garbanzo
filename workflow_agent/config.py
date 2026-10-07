@@ -91,7 +91,7 @@ class Settings:
             base_dir=base,
             workflow_excel=Path(env("WORKFLOW_EXCEL") or base / "data" / "AI_Agent_Workflow_Assessment.xlsx"),
             data_dir=base / "data",
-            output_dir=base / "outputs",
+            output_dir=Path(env("OUTPUT_DIR") or base / "outputs"),
             log_file=Path(env("EXECUTION_LOG_FILE") or base / "logs" / "execution_log.csv"),
             llm_provider=provider,
             llm_base_url=base_url,

@@ -1,0 +1,731 @@
+[{
+  "request": "Which workflows are failing most often?",
+  "kind": "completed",
+  "message": "",
+  "routing": {
+    "workflow_id": "WF010",
+    "method": "heuristic",
+    "confidence": 0.55,
+    "reason": "matched: workflow, fail, often, most",
+    "note": "",
+    "candidates": [
+      [
+        "WF010",
+        0.55
+      ],
+      [
+        "WF001",
+        0.0
+      ],
+      [
+        "WF002",
+        0.0
+      ]
+    ]
+  },
+  "run": {
+    "run_id": "20261007-072101-ac0950",
+    "workflow_id": "WF010",
+    "workflow_name": "Workflow Performance Report",
+    "status": "success",
+    "duration_ms": 23.1,
+    "parameters": {
+      "log_file": "data/execution_logs.csv"
+    },
+    "parameter_sources": {
+      "log_file": "sample"
+    },
+    "steps": [
+      {
+        "index": 1,
+        "name": "Load execution logs",
+        "status": "success",
+        "duration_ms": 18.1,
+        "detail": "Loaded 982 log row(s) from execution_logs.csv (bundled sample data)",
+        "error": ""
+      },
+      {
+        "index": 2,
+        "name": "calculate success/failure rate",
+        "status": "success",
+        "duration_ms": 1.2,
+        "detail": "179 runs across 10 workflows; overall failure rate 8.98%",
+        "error": ""
+      },
+      {
+        "index": 3,
+        "name": "calculate average execution time",
+        "status": "success",
+        "duration_ms": 0.5,
+        "detail": "Average run time computed for 10 workflow(s)",
+        "error": ""
+      },
+      {
+        "index": 4,
+        "name": "identify frequent errors",
+        "status": "success",
+        "duration_ms": 0.3,
+        "detail": "15 failed step(s); 8 distinct frequent error(s)",
+        "error": ""
+      },
+      {
+        "index": 5,
+        "name": "identify slow steps",
+        "status": "success",
+        "duration_ms": 2.0,
+        "detail": "6 step(s) above 2000 ms",
+        "error": ""
+      },
+      {
+        "index": 6,
+        "name": "generate recommendations",
+        "status": "success",
+        "duration_ms": 0.9,
+        "detail": "6 recommendation(s)",
+        "error": ""
+      }
+    ],
+    "decisions": [
+      {
+        "step": "calculate success/failure rate",
+        "name": "failure rate > threshold",
+        "outcome": "3 workflow(s) flagged: WF003, WF004, WF005",
+        "detail": "threshold 10.0% (strictly greater); needs_input runs are not failures"
+      },
+      {
+        "step": "calculate average execution time",
+        "name": "avg execution time > threshold",
+        "outcome": "1 workflow(s) flagged: WF004",
+        "detail": "threshold 5000 ms"
+      },
+      {
+        "step": "identify slow steps",
+        "name": "avg step time > threshold",
+        "outcome": "6 slow step(s)",
+        "detail": "threshold 2000 ms"
+      }
+    ],
+    "tool_calls": [
+      {
+        "tool": "csv_database_reader",
+        "operation": "read",
+        "step": "Load execution logs",
+        "status": "ok",
+        "attempts": 1,
+        "duration_ms": 9.6,
+        "error": ""
+      },
+      {
+        "tool": "calculator",
+        "operation": "rate",
+        "step": "calculate success/failure rate",
+        "status": "ok",
+        "attempts": 1,
+        "duration_ms": 0.0,
+        "error": ""
+      },
+      {
+        "tool": "calculator",
+        "operation": "rate",
+        "step": "calculate success/failure rate",
+        "status": "ok",
+        "attempts": 1,
+        "duration_ms": 0.0,
+        "error": ""
+      },
+      {
+        "tool": "calculator",
+        "operation": "rate",
+        "step": "calculate success/failure rate",
+        "status": "ok",
+        "attempts": 1,
+        "duration_ms": 0.0,
+        "error": ""
+      },
+      {
+        "tool": "calculator",
+        "operation": "rate",
+        "step": "calculate success/failure rate",
+        "status": "ok",
+        "attempts": 1,
+        "duration_ms": 0.0,
+        "error": ""
+      },
+      {
+        "tool": "calculator",
+        "operation": "rate",
+        "step": "calculate success/failure rate",
+        "status": "ok",
+        "attempts": 1,
+        "duration_ms": 0.0,
+        "error": ""
+      },
+      {
+        "tool": "calculator",
+        "operation": "rate",
+        "step": "calculate success/failure rate",
+        "status": "ok",
+        "attempts": 1,
+        "duration_ms": 0.0,
+        "error": ""
+      },
+      {
+        "tool": "calculator",
+        "operation": "rate",
+        "step": "calculate success/failure rate",
+        "status": "ok",
+        "attempts": 1,
+        "duration_ms": 0.0,
+        "error": ""
+      },
+      {
+        "tool": "calculator",
+        "operation": "rate",
+        "step": "calculate success/failure rate",
+        "status": "ok",
+        "attempts": 1,
+        "duration_ms": 0.0,
+        "error": ""
+      },
+      {
+        "tool": "calculator",
+        "operation": "rate",
+        "step": "calculate success/failure rate",
+        "status": "ok",
+        "attempts": 1,
+        "duration_ms": 0.0,
+        "error": ""
+      },
+      {
+        "tool": "calculator",
+        "operation": "rate",
+        "step": "calculate success/failure rate",
+        "status": "ok",
+        "attempts": 1,
+        "duration_ms": 0.0,
+        "error": ""
+      },
+      {
+        "tool": "calculator",
+        "operation": "rate",
+        "step": "calculate success/failure rate",
+        "status": "ok",
+        "attempts": 1,
+        "duration_ms": 0.0,
+        "error": ""
+      },
+      {
+        "tool": "calculator",
+        "operation": "mean",
+        "step": "calculate average execution time",
+        "status": "ok",
+        "attempts": 1,
+        "duration_ms": 0.0,
+        "error": ""
+      },
+      {
+        "tool": "calculator",
+        "operation": "mean",
+        "step": "calculate average execution time",
+        "status": "ok",
+        "attempts": 1,
+        "duration_ms": 0.0,
+        "error": ""
+      },
+      {
+        "tool": "calculator",
+        "operation": "mean",
+        "step": "calculate average execution time",
+        "status": "ok",
+        "attempts": 1,
+        "duration_ms": 0.0,
+        "error": ""
+      },
+      {
+        "tool": "calculator",
+        "operation": "mean",
+        "step": "calculate average execution time",
+        "status": "ok",
+        "attempts": 1,
+        "duration_ms": 0.1,
+        "error": ""
+      },
+      {
+        "tool": "calculator",
+        "operation": "mean",
+        "step": "calculate average execution time",
+        "status": "ok",
+        "attempts": 1,
+        "duration_ms": 0.0,
+        "error": ""
+      },
+      {
+        "tool": "calculator",
+        "operation": "mean",
+        "step": "calculate average execution time",
+        "status": "ok",
+        "attempts": 1,
+        "duration_ms": 0.0,
+        "error": ""
+      },
+      {
+        "tool": "calculator",
+        "operation": "mean",
+        "step": "calculate average execution time",
+        "status": "ok",
+        "attempts": 1,
+        "duration_ms": 0.1,
+        "error": ""
+      },
+      {
+        "tool": "calculator",
+        "operation": "mean",
+        "step": "calculate average execution time",
+        "status": "ok",
+        "attempts": 1,
+        "duration_ms": 0.0,
+        "error": ""
+      },
+      {
+        "tool": "calculator",
+        "operation": "mean",
+        "step": "calculate average execution time",
+        "status": "ok",
+        "attempts": 1,
+        "duration_ms": 0.0,
+        "error": ""
+      },
+      {
+        "tool": "calculator",
+        "operation": "mean",
+        "step": "calculate average execution time",
+        "status": "ok",
+        "attempts": 1,
+        "duration_ms": 0.0,
+        "error": ""
+      },
+      {
+        "tool": "reporting",
+        "operation": "top_counts",
+        "step": "identify frequent errors",
+        "status": "ok",
+        "attempts": 1,
+        "duration_ms": 0.1,
+        "error": ""
+      },
+      {
+        "tool": "reporting",
+        "operation": "group_stats",
+        "step": "identify slow steps",
+        "status": "ok",
+        "attempts": 1,
+        "duration_ms": 1.7,
+        "error": ""
+      }
+    ],
+    "warnings": [],
+    "error": "",
+    "error_hint": "",
+    "clarification": null,
+    "result": {
+      "summary": "3 of 10 workflows exceed the 10% failure-rate threshold; failing most often: WF003 (18.18%), WF004 (17.65%), WF005 (16.00%). 1 workflow(s) exceed the average-time threshold.",
+      "data": {
+        "failure_flagged": [
+          "WF003",
+          "WF004",
+          "WF005"
+        ],
+        "slow_flagged": [
+          "WF004"
+        ],
+        "metrics": {
+          "WF006": {
+            "runs": 12,
+            "failed": 0,
+            "failure_rate": 0.0,
+            "avg_ms": 4064.98
+          },
+          "WF010": {
+            "runs": 8,
+            "failed": 0,
+            "failure_rate": 0.0,
+            "avg_ms": 970.09
+          },
+          "WF007": {
+            "runs": 14,
+            "failed": 1,
+            "failure_rate": 9.09,
+            "avg_ms": 3790.17
+          },
+          "WF002": {
+            "runs": 20,
+            "failed": 1,
+            "failure_rate": 5.0,
+            "avg_ms": 696.31
+          },
+          "WF004": {
+            "runs": 18,
+            "failed": 3,
+            "failure_rate": 17.65,
+            "avg_ms": 12836.92
+          },
+          "WF008": {
+            "runs": 16,
+            "failed": 1,
+            "failure_rate": 6.25,
+            "avg_ms": 3606.86
+          },
+          "WF003": {
+            "runs": 22,
+            "failed": 4,
+            "failure_rate": 18.18,
+            "avg_ms": 1842.22
+          },
+          "WF005": {
+            "runs": 30,
+            "failed": 4,
+            "failure_rate": 16.0,
+            "avg_ms": 2331.18
+          },
+          "WF009": {
+            "runs": 15,
+            "failed": 0,
+            "failure_rate": 0.0,
+            "avg_ms": 1433.38
+          },
+          "WF001": {
+            "runs": 24,
+            "failed": 1,
+            "failure_rate": 4.35,
+            "avg_ms": 592.77
+          }
+        },
+        "recommendations": [
+          "[Reliability] WF003 Vendor File Processing fails 18.18% of runs. Most frequent: 'Cannot find the required column(s): sku.' in step 'detect columns' (3x) - validate inputs earlier and return a specific correction message; add schema checks before this step runs",
+          "[Reliability] WF004 Product Description Generator fails 17.65% of runs. Most frequent: 'llm: LLM endpoint unreachable: timed out' in step 'create product description' (3x) - add retries with exponential back-off and a graceful fallback for this dependency; review the timeout setting and add alerting",
+          "[Reliability] WF005 Customer Order Status fails 16.00% of runs. Most frequent: 'shipment_lookup: carrier API timed out (simulated)' in step 'retrieve shipment information' (4x) - add retries with exponential back-off and a graceful fallback for this dependency; review the timeout setting and add alerting",
+          "[Speed] WF004 Product Description Generator averages 12,837 ms per run (threshold 5,000). Slowest step 'create product description' averages 4,036 ms - reduce LLM latency: shorter prompts, a smaller/faster model, cache repeated prompts, or run independent generation steps concurrently",
+          "[Speed] WF006 Duplicate Product Detection: step 'compare product attributes' averages 3,021 ms (p95 3,588) - avoid all-pairs comparison: block candidates (inverted index / blocking keys) and vectorise the scoring",
+          "[Speed] WF008 SEO Keyword Classification: step 'classify search intent' averages 2,334 ms (p95 3,104) - reduce LLM latency: shorter prompts, a smaller/faster model, cache repeated prompts, or run independent generation steps concurrently"
+        ],
+        "top_errors": [
+          {
+            "workflow_id": "WF005",
+            "step_name": "retrieve shipment information",
+            "error_type": "TransientToolError",
+            "error_message": "shipment_lookup: carrier API timed out (simulated)",
+            "count": 4
+          },
+          {
+            "workflow_id": "WF004",
+            "step_name": "create product description",
+            "error_type": "TransientToolError",
+            "error_message": "llm: LLM endpoint unreachable: timed out",
+            "count": 3
+          },
+          {
+            "workflow_id": "WF003",
+            "step_name": "detect columns",
+            "error_type": "StepError",
+            "error_message": "Cannot find the required column(s): sku.",
+            "count": 3
+          },
+          {
+            "workflow_id": "WF002",
+            "step_name": "match products by SKU",
+            "error_type": "StepError",
+            "error_message": "No SKUs match between the product file and the vendor price list.",
+            "count": 1
+          },
+          {
+            "workflow_id": "WF001",
+            "step_name": "Load inventory",
+            "error_type": "ToolError",
+            "error_message": "File not found: inventory.csv",
+            "count": 1
+          },
+          {
+            "workflow_id": "WF008",
+            "step_name": "Read keywords",
+            "error_type": "ToolError",
+            "error_message": "File not found: keywords.csv",
+            "count": 1
+          },
+          {
+            "workflow_id": "WF007",
+            "step_name": "summarize products",
+            "error_type": "StepError",
+            "error_message": "No products matched (collection contains 'summer').",
+            "count": 1
+          },
+          {
+            "workflow_id": "WF003",
+            "step_name": "Read file",
+            "error_type": "ToolError",
+            "error_message": "unsupported file type '.xls' (use .csv or .xlsx)",
+            "count": 1
+          }
+        ]
+      },
+      "artifacts": [
+        "examples/outputs/artifacts/20261007-072101-ac0950/performance_report.csv"
+      ],
+      "tables": [
+        {
+          "title": "Workflow metrics (worst failure rate first)",
+          "columns": [
+            "ID",
+            "Workflow",
+            "Runs",
+            "OK",
+            "Failed",
+            "Asked user",
+            "Failure rate",
+            "Avg ms",
+            "Flags"
+          ],
+          "rows": [
+            [
+              "WF003",
+              "Vendor File Processing",
+              22,
+              18,
+              4,
+              0,
+              "18.18%",
+              "1,842",
+              "HIGH FAILURE RATE"
+            ],
+            [
+              "WF004",
+              "Product Description Generator",
+              18,
+              14,
+              3,
+              1,
+              "17.65%",
+              "12,837",
+              "HIGH FAILURE RATE, SLOW"
+            ],
+            [
+              "WF005",
+              "Customer Order Status",
+              30,
+              21,
+              4,
+              5,
+              "16.00%",
+              "2,331",
+              "HIGH FAILURE RATE"
+            ],
+            [
+              "WF007",
+              "Marketing Campaign Brief",
+              14,
+              10,
+              1,
+              3,
+              "9.09%",
+              "3,790",
+              "ok"
+            ],
+            [
+              "WF008",
+              "SEO Keyword Classification",
+              16,
+              15,
+              1,
+              0,
+              "6.25%",
+              "3,607",
+              "ok"
+            ],
+            [
+              "WF002",
+              "Product Price Validation",
+              20,
+              19,
+              1,
+              0,
+              "5.00%",
+              "696",
+              "ok"
+            ],
+            [
+              "WF001",
+              "Inventory Restock Check",
+              24,
+              22,
+              1,
+              1,
+              "4.35%",
+              "593",
+              "ok"
+            ],
+            [
+              "WF006",
+              "Duplicate Product Detection",
+              12,
+              12,
+              0,
+              0,
+              "0.00%",
+              "4,065",
+              "ok"
+            ],
+            [
+              "WF009",
+              "Employee Task Assignment",
+              15,
+              13,
+              0,
+              2,
+              "0.00%",
+              "1,433",
+              "ok"
+            ],
+            [
+              "WF010",
+              "Workflow Performance Report",
+              8,
+              8,
+              0,
+              0,
+              "0.00%",
+              "970",
+              "ok"
+            ]
+          ]
+        },
+        {
+          "title": "Most frequent errors",
+          "columns": [
+            "Workflow",
+            "Step",
+            "Error type",
+            "Message",
+            "Count"
+          ],
+          "rows": [
+            [
+              "WF005",
+              "retrieve shipment information",
+              "TransientToolError",
+              "shipment_lookup: carrier API timed out (simulated)",
+              4
+            ],
+            [
+              "WF004",
+              "create product description",
+              "TransientToolError",
+              "llm: LLM endpoint unreachable: timed out",
+              3
+            ],
+            [
+              "WF003",
+              "detect columns",
+              "StepError",
+              "Cannot find the required column(s): sku.",
+              3
+            ],
+            [
+              "WF002",
+              "match products by SKU",
+              "StepError",
+              "No SKUs match between the product file and the vendor price list.",
+              1
+            ],
+            [
+              "WF001",
+              "Load inventory",
+              "ToolError",
+              "File not found: inventory.csv",
+              1
+            ],
+            [
+              "WF008",
+              "Read keywords",
+              "ToolError",
+              "File not found: keywords.csv",
+              1
+            ],
+            [
+              "WF007",
+              "summarize products",
+              "StepError",
+              "No products matched (collection contains 'summer').",
+              1
+            ],
+            [
+              "WF003",
+              "Read file",
+              "ToolError",
+              "unsupported file type '.xls' (use .csv or .xlsx)",
+              1
+            ]
+          ]
+        },
+        {
+          "title": "Slow steps (avg > 2,000 ms)",
+          "columns": [
+            "Workflow",
+            "Step",
+            "Avg ms",
+            "p95 ms",
+            "Runs"
+          ],
+          "rows": [
+            [
+              "WF004",
+              "create product description",
+              "4,036",
+              "5,582",
+              17
+            ],
+            [
+              "WF004",
+              "generate meta description",
+              "3,474",
+              "4,317",
+              14
+            ],
+            [
+              "WF004",
+              "generate short description",
+              "3,436",
+              "4,250",
+              14
+            ],
+            [
+              "WF004",
+              "generate SEO title",
+              "3,179",
+              "4,301",
+              14
+            ],
+            [
+              "WF006",
+              "compare product attributes",
+              "3,021",
+              "3,588",
+              12
+            ],
+            [
+              "WF008",
+              "classify search intent",
+              "2,334",
+              "3,104",
+              15
+            ]
+          ]
+        }
+      ],
+      "text_blocks": [
+        {
+          "title": "Recommendations",
+          "body": "1. [Reliability] WF003 Vendor File Processing fails 18.18% of runs. Most frequent: 'Cannot find the required column(s): sku.' in step 'detect columns' (3x) - validate inputs earlier and return a specific correction message; add schema checks before this step runs\n2. [Reliability] WF004 Product Description Generator fails 17.65% of runs. Most frequent: 'llm: LLM endpoint unreachable: timed out' in step 'create product description' (3x) - add retries with exponential back-off and a graceful fallback for this dependency; review the timeout setting and add alerting\n3. [Reliability] WF005 Customer Order Status fails 16.00% of runs. Most frequent: 'shipment_lookup: carrier API timed out (simulated)' in step 'retrieve shipment information' (4x) - add retries with exponential back-off and a graceful fallback for this dependency; review the timeout setting and add alerting\n4. [Speed] WF004 Product Description Generator averages 12,837 ms per run (threshold 5,000). Slowest step 'create product description' averages 4,036 ms - reduce LLM latency: shorter prompts, a smaller/faster model, cache repeated prompts, or run independent generation steps concurrently\n5. [Speed] WF006 Duplicate Product Detection: step 'compare product attributes' averages 3,021 ms (p95 3,588) - avoid all-pairs comparison: block candidates (inverted index / blocking keys) and vectorise the scoring\n6. [Speed] WF008 SEO Keyword Classification: step 'classify search intent' averages 2,334 ms (p95 3,104) - reduce LLM latency: shorter prompts, a smaller/faster model, cache repeated prompts, or run independent generation steps concurrently"
+        }
+      ]
+    }
+  }
+}]

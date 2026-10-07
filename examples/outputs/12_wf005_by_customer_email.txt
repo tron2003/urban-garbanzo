@@ -1,0 +1,45 @@
+==============================================================================
+ Request: Show the orders for ana.silva@example.com
+==============================================================================
+ Selected workflow : WF005 - Customer Order Status
+ Routing           : heuristic, confidence 0.47
+ Why               : matched: order, <customer_email found>
+ Runner-up         : WF003 (0.11)
+ Parameters        : customer_email=ana.silva@example.com
+
+Steps executed
+  1. [OK  ] Validate identifier  (0 ms)
+        Using ana.silva@example.com
+  2. [OK  ] search order data  (0 ms)
+        Found 2 order(s)
+  3. [OK  ] retrieve order status  (0 ms)
+        ORD-1001: Shipped, ORD-1006: Processing
+  4. [OK  ] retrieve shipment information  (0 ms)
+        ORD-1001: tracking found; ORD-1006: no tracking
+  5. [OK  ] summarize current status  (0 ms)
+        Summarized 2 order(s)
+
+Conditions / decisions   [Excel rule: If no order is found, ask for another identifier]
+  - identifier type: customer email
+  - order found: yes  (2 order(s) for ana.silva@example.com)
+
+Tools / API calls
+  order_api.search x1 (0 ms)
+  shipment_lookup x1 (0 ms)
+
+Result  [SUCCESS, 0 ms total]
+  ORD-1001 is shipped - in transit via DHL (tracking DHL-7788123400), ETA 2026-10-10 | ORD-1006 is processing. Not shipped yet - tracking will be available once the order leaves the warehouse..
+
+  Order status & shipment
+  Order    | Status     | Carrier | Tracking #     | Shipment   | ETA        | Last event / note
+  ---------+------------+---------+----------------+------------+------------+-----------------------------------------------
+  ORD-1001 | Shipped    | DHL     | DHL-7788123400 | In transit | 2026-10-10 | Departed sorting hub - Frankfurt (2026-10-05)
+  ORD-1006 | Processing | -       | -              | -          | -          | Not shipped yet - tracking will be available …
+
+  Items
+  Order    | Item                       | SKU      | Qty
+  ---------+----------------------------+----------+----
+  ORD-1001 | Denim Jacket               | SKU-1003 | 1
+  ORD-1001 | Wool Scarf                 | SKU-1008 | 1
+  ORD-1001 | Classic Cotton T-Shirt (M) | SKU-1001 | 1
+  ORD-1006 | Stainless Water Bottle     | SKU-1009 | 1

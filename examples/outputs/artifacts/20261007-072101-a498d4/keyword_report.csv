@@ -1,0 +1,23 @@
+keyword,monthly_searches,intent,intent_source,category,priority,recommended_target_page
+running shoes,12000,commercial,rules,Footwear,high,/collections/footwear
+yoga mat,9900,commercial,rules,Fitness,high,/collections/fitness
+leather wallet,5400,commercial,rules,Accessories,high,/collections/accessories
+best bluetooth speaker under 50,4100,commercial,rules,Electronics,high,/collections/electronics
+best running shoes for flat feet,3600,commercial,rules,Footwear,high,/collections/footwear
+stainless steel water bottle,3300,commercial,rules,Home,high,/collections/home
+buy running shoes online,2400,transactional,rules,Footwear,high,/collections/footwear
+denim jacket men,2700,commercial,rules,Apparel,high,/collections/apparel
+cheap yoga mat,2100,transactional,rules,Fitness,high,/collections/fitness
+buy leather wallet for men,1600,transactional,rules,Accessories,high,/collections/accessories
+yoga mat review,1300,commercial,rules,Fitness,high,/collections/fitness
+water bottle near me,1000,transactional,rules,Home,high,/collections/home
+how to choose running shoes,1900,informational,rules,Footwear,medium,"/blog/how-to-choose-running-shoes (new guide, link to /collections/footwear)"
+bluetooth speaker discount code,590,transactional,rules,Electronics,medium,/collections/electronics
+denim jacket outfit ideas,1400,informational,rules,Apparel,medium,"/blog/denim-jacket-outfit-ideas (new guide, link to /collections/apparel)"
+wool scarf gift,390,commercial,rules,Accessories,medium,/collections/accessories
+how to clean a leather wallet,720,informational,rules,Accessories,low,"/blog/how-to-clean-a-leather-wallet (new guide, link to /collections/accessories)"
+nike running shoes official site,880,navigational,rules,Footwear,low,/ (homepage / brand page)
+leather wallet vs fabric wallet,320,commercial,rules,Accessories,low,/collections/accessories
+how to remove odor from water bottle,480,informational,rules,Home,low,"/blog/how-to-remove-odor-from-water-bottle (new guide, link to /collections/home)"
+astrology compatibility,150,commercial,rules,Uncategorized,low,No matching page - review manually
+what is a tpe yoga mat,260,informational,rules,Fitness,low,"/blog/what-is-a-tpe-yoga-mat (new guide, link to /collections/fitness)"

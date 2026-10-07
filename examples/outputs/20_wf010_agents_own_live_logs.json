@@ -1,0 +1,534 @@
+[{
+  "request": "Give me a performance report on the live logs",
+  "kind": "completed",
+  "message": "",
+  "routing": {
+    "workflow_id": "WF010",
+    "method": "heuristic",
+    "confidence": 0.479,
+    "reason": "matched: performance, logs, report, <live_logs found>",
+    "note": "",
+    "candidates": [
+      [
+        "WF010",
+        0.479
+      ],
+      [
+        "WF002",
+        0.029
+      ],
+      [
+        "WF008",
+        0.028
+      ]
+    ]
+  },
+  "run": {
+    "run_id": "20261007-072101-a0ccd7",
+    "workflow_id": "WF010",
+    "workflow_name": "Workflow Performance Report",
+    "status": "success",
+    "duration_ms": 5.1,
+    "parameters": {
+      "live_logs": true,
+      "log_file": "/home/claude/ai-agent-workflow-automation/examples/outputs/execution_log.csv"
+    },
+    "parameter_sources": {
+      "live_logs": "user",
+      "log_file": "user"
+    },
+    "steps": [
+      {
+        "index": 1,
+        "name": "Load execution logs",
+        "status": "success",
+        "duration_ms": 3.8,
+        "detail": "Loaded 171 log row(s) from execution_log.csv",
+        "error": ""
+      },
+      {
+        "index": 2,
+        "name": "calculate success/failure rate",
+        "status": "success",
+        "duration_ms": 0.2,
+        "detail": "31 runs across 10 workflows; overall failure rate 0.00%",
+        "error": ""
+      },
+      {
+        "index": 3,
+        "name": "calculate average execution time",
+        "status": "success",
+        "duration_ms": 0.1,
+        "detail": "Average run time computed for 10 workflow(s)",
+        "error": ""
+      },
+      {
+        "index": 4,
+        "name": "identify frequent errors",
+        "status": "success",
+        "duration_ms": 0.0,
+        "detail": "0 failed step(s); 0 distinct frequent error(s)",
+        "error": ""
+      },
+      {
+        "index": 5,
+        "name": "identify slow steps",
+        "status": "success",
+        "duration_ms": 0.4,
+        "detail": "0 step(s) above 2000 ms",
+        "error": ""
+      },
+      {
+        "index": 6,
+        "name": "generate recommendations",
+        "status": "success",
+        "duration_ms": 0.6,
+        "detail": "1 recommendation(s)",
+        "error": ""
+      }
+    ],
+    "decisions": [
+      {
+        "step": "calculate success/failure rate",
+        "name": "failure rate > threshold",
+        "outcome": "0 workflow(s) flagged: none",
+        "detail": "threshold 10.0% (strictly greater); needs_input runs are not failures"
+      },
+      {
+        "step": "calculate average execution time",
+        "name": "avg execution time > threshold",
+        "outcome": "0 workflow(s) flagged: none",
+        "detail": "threshold 5000 ms"
+      },
+      {
+        "step": "identify slow steps",
+        "name": "avg step time > threshold",
+        "outcome": "0 slow step(s)",
+        "detail": "threshold 2000 ms"
+      }
+    ],
+    "tool_calls": [
+      {
+        "tool": "csv_database_reader",
+        "operation": "read",
+        "step": "Load execution logs",
+        "status": "ok",
+        "attempts": 1,
+        "duration_ms": 2.6,
+        "error": ""
+      },
+      {
+        "tool": "calculator",
+        "operation": "rate",
+        "step": "calculate success/failure rate",
+        "status": "ok",
+        "attempts": 1,
+        "duration_ms": 0.0,
+        "error": ""
+      },
+      {
+        "tool": "calculator",
+        "operation": "rate",
+        "step": "calculate success/failure rate",
+        "status": "ok",
+        "attempts": 1,
+        "duration_ms": 0.0,
+        "error": ""
+      },
+      {
+        "tool": "calculator",
+        "operation": "rate",
+        "step": "calculate success/failure rate",
+        "status": "ok",
+        "attempts": 1,
+        "duration_ms": 0.0,
+        "error": ""
+      },
+      {
+        "tool": "calculator",
+        "operation": "rate",
+        "step": "calculate success/failure rate",
+        "status": "ok",
+        "attempts": 1,
+        "duration_ms": 0.0,
+        "error": ""
+      },
+      {
+        "tool": "calculator",
+        "operation": "rate",
+        "step": "calculate success/failure rate",
+        "status": "ok",
+        "attempts": 1,
+        "duration_ms": 0.0,
+        "error": ""
+      },
+      {
+        "tool": "calculator",
+        "operation": "rate",
+        "step": "calculate success/failure rate",
+        "status": "ok",
+        "attempts": 1,
+        "duration_ms": 0.0,
+        "error": ""
+      },
+      {
+        "tool": "calculator",
+        "operation": "rate",
+        "step": "calculate success/failure rate",
+        "status": "ok",
+        "attempts": 1,
+        "duration_ms": 0.0,
+        "error": ""
+      },
+      {
+        "tool": "calculator",
+        "operation": "rate",
+        "step": "calculate success/failure rate",
+        "status": "ok",
+        "attempts": 1,
+        "duration_ms": 0.0,
+        "error": ""
+      },
+      {
+        "tool": "calculator",
+        "operation": "rate",
+        "step": "calculate success/failure rate",
+        "status": "ok",
+        "attempts": 1,
+        "duration_ms": 0.0,
+        "error": ""
+      },
+      {
+        "tool": "calculator",
+        "operation": "rate",
+        "step": "calculate success/failure rate",
+        "status": "ok",
+        "attempts": 1,
+        "duration_ms": 0.0,
+        "error": ""
+      },
+      {
+        "tool": "calculator",
+        "operation": "rate",
+        "step": "calculate success/failure rate",
+        "status": "ok",
+        "attempts": 1,
+        "duration_ms": 0.0,
+        "error": ""
+      },
+      {
+        "tool": "calculator",
+        "operation": "mean",
+        "step": "calculate average execution time",
+        "status": "ok",
+        "attempts": 1,
+        "duration_ms": 0.0,
+        "error": ""
+      },
+      {
+        "tool": "calculator",
+        "operation": "mean",
+        "step": "calculate average execution time",
+        "status": "ok",
+        "attempts": 1,
+        "duration_ms": 0.0,
+        "error": ""
+      },
+      {
+        "tool": "calculator",
+        "operation": "mean",
+        "step": "calculate average execution time",
+        "status": "ok",
+        "attempts": 1,
+        "duration_ms": 0.0,
+        "error": ""
+      },
+      {
+        "tool": "calculator",
+        "operation": "mean",
+        "step": "calculate average execution time",
+        "status": "ok",
+        "attempts": 1,
+        "duration_ms": 0.0,
+        "error": ""
+      },
+      {
+        "tool": "calculator",
+        "operation": "mean",
+        "step": "calculate average execution time",
+        "status": "ok",
+        "attempts": 1,
+        "duration_ms": 0.0,
+        "error": ""
+      },
+      {
+        "tool": "calculator",
+        "operation": "mean",
+        "step": "calculate average execution time",
+        "status": "ok",
+        "attempts": 1,
+        "duration_ms": 0.0,
+        "error": ""
+      },
+      {
+        "tool": "calculator",
+        "operation": "mean",
+        "step": "calculate average execution time",
+        "status": "ok",
+        "attempts": 1,
+        "duration_ms": 0.0,
+        "error": ""
+      },
+      {
+        "tool": "calculator",
+        "operation": "mean",
+        "step": "calculate average execution time",
+        "status": "ok",
+        "attempts": 1,
+        "duration_ms": 0.0,
+        "error": ""
+      },
+      {
+        "tool": "calculator",
+        "operation": "mean",
+        "step": "calculate average execution time",
+        "status": "ok",
+        "attempts": 1,
+        "duration_ms": 0.0,
+        "error": ""
+      },
+      {
+        "tool": "calculator",
+        "operation": "mean",
+        "step": "calculate average execution time",
+        "status": "ok",
+        "attempts": 1,
+        "duration_ms": 0.0,
+        "error": ""
+      },
+      {
+        "tool": "reporting",
+        "operation": "group_stats",
+        "step": "identify slow steps",
+        "status": "ok",
+        "attempts": 1,
+        "duration_ms": 0.4,
+        "error": ""
+      }
+    ],
+    "warnings": [],
+    "error": "",
+    "error_hint": "",
+    "clarification": null,
+    "result": {
+      "summary": "0 of 10 workflows exceed the 10% failure-rate threshold. 0 workflow(s) exceed the average-time threshold.",
+      "data": {
+        "failure_flagged": [],
+        "slow_flagged": [],
+        "metrics": {
+          "WF001": {
+            "runs": 3,
+            "failed": 0,
+            "failure_rate": 0.0,
+            "avg_ms": 1.77
+          },
+          "WF002": {
+            "runs": 2,
+            "failed": 0,
+            "failure_rate": 0.0,
+            "avg_ms": 2.25
+          },
+          "WF003": {
+            "runs": 3,
+            "failed": 0,
+            "failure_rate": 0.0,
+            "avg_ms": 3.87
+          },
+          "WF004": {
+            "runs": 3,
+            "failed": 0,
+            "failure_rate": 0.0,
+            "avg_ms": 0.0
+          },
+          "WF005": {
+            "runs": 7,
+            "failed": 0,
+            "failure_rate": 0.0,
+            "avg_ms": 133.55
+          },
+          "WF006": {
+            "runs": 2,
+            "failed": 0,
+            "failure_rate": 0.0,
+            "avg_ms": 11.8
+          },
+          "WF007": {
+            "runs": 3,
+            "failed": 0,
+            "failure_rate": 0.0,
+            "avg_ms": 3.0
+          },
+          "WF008": {
+            "runs": 3,
+            "failed": 0,
+            "failure_rate": 0.0,
+            "avg_ms": 2.8
+          },
+          "WF009": {
+            "runs": 3,
+            "failed": 0,
+            "failure_rate": 0.0,
+            "avg_ms": 2.93
+          },
+          "WF010": {
+            "runs": 2,
+            "failed": 0,
+            "failure_rate": 0.0,
+            "avg_ms": 19.15
+          }
+        },
+        "recommendations": [
+          "No workflow exceeds the failure-rate or timing thresholds. Keep monitoring and re-run this report regularly."
+        ],
+        "top_errors": []
+      },
+      "artifacts": [
+        "examples/outputs/artifacts/20261007-072101-a0ccd7/performance_report.csv"
+      ],
+      "tables": [
+        {
+          "title": "Workflow metrics (worst failure rate first)",
+          "columns": [
+            "ID",
+            "Workflow",
+            "Runs",
+            "OK",
+            "Failed",
+            "Asked user",
+            "Failure rate",
+            "Avg ms",
+            "Flags"
+          ],
+          "rows": [
+            [
+              "WF001",
+              "Inventory Restock Check",
+              3,
+              3,
+              0,
+              0,
+              "0.00%",
+              "2",
+              "ok"
+            ],
+            [
+              "WF002",
+              "Product Price Validation",
+              2,
+              2,
+              0,
+              0,
+              "0.00%",
+              "2",
+              "ok"
+            ],
+            [
+              "WF003",
+              "Vendor File Processing",
+              3,
+              3,
+              0,
+              0,
+              "0.00%",
+              "4",
+              "ok"
+            ],
+            [
+              "WF004",
+              "Product Description Generator",
+              3,
+              3,
+              0,
+              0,
+              "0.00%",
+              "0",
+              "ok"
+            ],
+            [
+              "WF005",
+              "Customer Order Status",
+              7,
+              6,
+              0,
+              1,
+              "0.00%",
+              "134",
+              "ok"
+            ],
+            [
+              "WF006",
+              "Duplicate Product Detection",
+              2,
+              2,
+              0,
+              0,
+              "0.00%",
+              "12",
+              "ok"
+            ],
+            [
+              "WF007",
+              "Marketing Campaign Brief",
+              3,
+              1,
+              0,
+              2,
+              "0.00%",
+              "3",
+              "ok"
+            ],
+            [
+              "WF008",
+              "SEO Keyword Classification",
+              3,
+              3,
+              0,
+              0,
+              "0.00%",
+              "3",
+              "ok"
+            ],
+            [
+              "WF009",
+              "Employee Task Assignment",
+              3,
+              3,
+              0,
+              0,
+              "0.00%",
+              "3",
+              "ok"
+            ],
+            [
+              "WF010",
+              "Workflow Performance Report",
+              2,
+              2,
+              0,
+              0,
+              "0.00%",
+              "19",
+              "ok"
+            ]
+          ]
+        }
+      ],
+      "text_blocks": [
+        {
+          "title": "Recommendations",
+          "body": "1. No workflow exceeds the failure-rate or timing thresholds. Keep monitoring and re-run this report regularly."
+        }
+      ]
+    }
+  }
+}]

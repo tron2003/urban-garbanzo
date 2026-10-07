@@ -1,0 +1,70 @@
+==============================================================================
+ Request: Process this vendor spreadsheet and show invalid rows.
+==============================================================================
+ Selected workflow : WF003 - Vendor File Processing
+ Routing           : heuristic, confidence 0.65
+ Why               : matched: spreadsheet, invalid, rows, proces
+ Runner-up         : WF002 (0.13)
+ Parameters        : vendor_file=data/vendor_file.csv [bundled sample]
+
+Steps executed
+  1. [OK  ] Read file  (2 ms)
+        Read 8 data row(s) from vendor_file.csv (bundled sample data); 1 blank row(s) ignored
+  2. [OK  ] detect columns  (0 ms)
+        Detected 5 known column(s): Item Code -> sku, Product Title -> product_name, Cost Price -> price, Qty Available -> quantity, Brand -> brand
+  3. [OK  ] normalize column names  (0 ms)
+        Normalized to: sku, product_name, price, quantity, brand
+  4. [OK  ] validate required fields  (0 ms)
+        6 valid, 2 invalid
+  5. [OK  ] identify invalid rows  (0 ms)
+        Built invalid-row report (2 row(s))
+  6. [OK  ] produce cleaned dataset  (1 ms)
+        Wrote examples/outputs/artifacts/20261007-072100-630795/vendor_cleaned.csv and examples/outputs/artifacts/20261007-072100-630795/vendor_invalid_rows.csv
+
+Conditions / decisions   [Excel rule: Rows missing SKU or product name are invalid]
+  - required columns present: yes  (required: SKU and product name)
+  - row invalid if SKU or product name is missing: 2 invalid of 8
+
+Tools / API calls
+  excel_csv_parser.read x1 (2 ms)
+  data_validation.required_fields x1 (0 ms)
+  data_validation.duplicate_keys x1 (0 ms)
+  data_validation.numeric_fields x1 (0 ms)
+
+Warnings
+  ! Duplicate SKU(s) kept (not invalid per the rules): V-001 (rows 2, 9)
+  ! Non-numeric price in row(s): 8 ('abc') - rows kept, price blanked
+
+Result  [SUCCESS, 3 ms total]
+  Processed 8 row(s): 6 valid, 2 invalid (1 blank row(s) ignored).
+
+  Validation summary
+  Metric                      | Value
+  ----------------------------+------
+  Rows read                   | 8
+  Valid rows                  | 6
+  Invalid rows                | 2
+  Blank rows ignored          | 1
+  Duplicate SKUs (kept)       | 1
+  Rows with non-numeric price | 1
+
+  Invalid rows
+  source_row | sku     | product_name  | reasons
+  -----------+---------+---------------+---------------------
+  4          | (blank) | Thermal Socks | missing sku
+  5          | V-004   | (blank)       | missing product name
+
+  Cleaned dataset (preview)
+  sku   | product_name                    | price | quantity | brand
+  ------+---------------------------------+-------+----------+-----------
+  V-001 | Wool Beanie                     | 12.50 | 100      | NordicWear
+  V-002 | Fleece Gloves                   | 9.99  | 50       | NordicWear
+  V-005 | Down Vest                       |       | 10       | NordicWear
+  V-007 | Rain Poncho                     |       | 25       | NordicWear
+  V-001 | Wool Beanie (duplicate listing) | 12.50 | 100      | NordicWear
+  V-009 | Trail Gaiters                   | 8.40  | 15       | NordicWear
+  (6 row(s) in total; full file saved)
+
+Files written
+  examples/outputs/artifacts/20261007-072100-630795/vendor_cleaned.csv
+  examples/outputs/artifacts/20261007-072100-630795/vendor_invalid_rows.csv

@@ -71,3 +71,12 @@ def test_broken_roster_fails_cleanly(agent, tmp_path):
     f = tmp_path / "e.csv"; f.write_text("name,skills\nA,react\n")
     r = run(agent, employees_file=str(f))
     assert r.status == "failed" and "missing column" in r.error
+
+
+def test_explicit_task_text_in_request_is_never_replaced_by_the_sample(agent):
+    """Regression: 'Assign this task to the best developer: rewrite ... Rust' used to fall back to the sample React task."""
+    resp = agent.handle("Assign this task to the best developer: rewrite the billing engine in Rust, 10 hours")
+    p = resp.report.params
+    assert "Rust" in p["task_description"] and "10 hours" not in p["task_description"]
+    assert resp.report.param_sources["task_description"] == "user"
+    assert resp.report.result.data["decision"] == "escalate"        # nobody has Rust

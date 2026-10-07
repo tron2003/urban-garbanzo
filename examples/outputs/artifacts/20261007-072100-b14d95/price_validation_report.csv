@@ -1,0 +1,10 @@
+sku,name,internal_price,vendor_price,difference_pct,flagged
+SKU-1001,Classic Cotton T-Shirt (M),19.99,20.49,2.50,False
+SKU-1002,Classic Cotton T-Shirt (L),19.99,22.99,15.01,True
+SKU-1003,Denim Jacket,79.00,71.10,-10.00,False
+SKU-1004,Leather Wallet,45.00,39.00,-13.33,True
+SKU-1005,Canvas Tote Bag,12.50,12.50,0.00,False
+SKU-1006,Running Shoes (42),89.90,95.00,5.67,False
+SKU-1007,Running Shoes (43),89.90,89.90,0.00,False
+SKU-1008,Wool Scarf,24.00,31.50,31.25,True
+SKU-1010,Yoga Mat,29.00,26.50,-8.62,False

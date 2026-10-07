@@ -1,0 +1,68 @@
+==============================================================================
+ Request: Where is order ORD-9999?
+==============================================================================
+ Selected workflow : WF005 - Customer Order Status
+ Routing           : heuristic, confidence 0.60
+ Why               : matched: order, ord, <order_id found>
+ Runner-up         : WF001 (0.00)
+ Parameters        : order_id=ORD-9999
+
+Steps executed
+  1. [OK  ] Validate identifier  (0 ms)
+        Using ORD-9999
+  2. [ASK ] search order data  (0 ms)
+        ! I couldn't find any order for ORD-9999. Could you double-check it or give me another identifier (order ID or the email used at checkout)?
+  3. [skip] retrieve order status
+  4. [skip] retrieve shipment information
+  5. [skip] summarize current status
+
+Conditions / decisions   [Excel rule: If no order is found, ask for another identifier]
+  - identifier type: order id
+  - order found: no  (nothing matches ORD-9999)
+
+Tools / API calls
+  order_api.search x1 (0 ms)
+
+Result  [NEEDS INPUT, 0 ms total]
+  I need more information: I couldn't find any order for ORD-9999. Could you double-check it or give me another identifier (order ID or the email used at checkout)?
+
+==============================================================================
+ Request: Sorry, it's ORD-1003
+==============================================================================
+ Selected workflow : WF005 - Customer Order Status
+ Routing           : continued
+ Why               : your reply answers the question I asked
+ Parameters        : order_id=ORD-1003
+
+Steps executed
+  1. [OK  ] Validate identifier  (0 ms)
+        Using ORD-1003
+  2. [OK  ] search order data  (0 ms)
+        Found 1 order(s)
+  3. [OK  ] retrieve order status  (0 ms)
+        ORD-1003: Delivered
+  4. [OK  ] retrieve shipment information  (0 ms)
+        ORD-1003: tracking found
+  5. [OK  ] summarize current status  (0 ms)
+        Summarized 1 order(s)
+
+Conditions / decisions   [Excel rule: If no order is found, ask for another identifier]
+  - identifier type: order id
+  - order found: yes  (1 order(s) for ORD-1003)
+
+Tools / API calls
+  order_api.search x1 (0 ms)
+  shipment_lookup x1 (0 ms)
+
+Result  [SUCCESS, 0 ms total]
+  ORD-1003 is delivered - delivered via FedEx (tracking FDX-5521009876), ETA 2026-09-19.
+
+  Order status & shipment
+  Order    | Status    | Carrier | Tracking #     | Shipment  | ETA        | Last event / note
+  ---------+-----------+---------+----------------+-----------+------------+-------------------------------------
+  ORD-1003 | Delivered | FedEx   | FDX-5521009876 | Delivered | 2026-09-19 | Delivered to front desk (2026-09-19)
+
+  Items
+  Order    | Item           | SKU      | Qty
+  ---------+----------------+----------+----
+  ORD-1003 | Leather Wallet | SKU-1004 | 1

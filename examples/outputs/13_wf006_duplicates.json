@@ -1,0 +1,452 @@
+[{
+  "request": "Find likely duplicate products in the catalog.",
+  "kind": "completed",
+  "message": "",
+  "routing": {
+    "workflow_id": "WF006",
+    "method": "heuristic",
+    "confidence": 0.614,
+    "reason": "matched: duplicate, likely, catalog, find",
+    "note": "",
+    "candidates": [
+      [
+        "WF006",
+        0.614
+      ],
+      [
+        "WF002",
+        0.12
+      ],
+      [
+        "WF004",
+        0.05
+      ]
+    ]
+  },
+  "run": {
+    "run_id": "20261007-072101-ba0f19",
+    "workflow_id": "WF006",
+    "workflow_name": "Duplicate Product Detection",
+    "status": "success",
+    "duration_ms": 14.8,
+    "parameters": {
+      "catalog_file": "data/catalog.csv"
+    },
+    "parameter_sources": {
+      "catalog_file": "sample"
+    },
+    "steps": [
+      {
+        "index": 1,
+        "name": "Load products",
+        "status": "success",
+        "duration_ms": 1.8,
+        "detail": "Loaded 17 products from catalog.csv (bundled sample data)",
+        "error": ""
+      },
+      {
+        "index": 2,
+        "name": "normalize names/SKUs",
+        "status": "success",
+        "duration_ms": 0.2,
+        "detail": "Normalized 17 names into tokens and SKUs into comparable keys",
+        "error": ""
+      },
+      {
+        "index": 3,
+        "name": "compare identifiers",
+        "status": "success",
+        "duration_ms": 0.0,
+        "detail": "2 definite pair(s) from SKU comparison",
+        "error": ""
+      },
+      {
+        "index": 4,
+        "name": "compare product attributes",
+        "status": "success",
+        "duration_ms": 12.0,
+        "detail": "Scored 134 candidate pair(s): 3 possible, 6 variant(s) excluded",
+        "error": ""
+      },
+      {
+        "index": 5,
+        "name": "group likely duplicates",
+        "status": "success",
+        "duration_ms": 0.0,
+        "detail": "5 duplicate group(s) covering 10 records",
+        "error": ""
+      },
+      {
+        "index": 6,
+        "name": "assign confidence",
+        "status": "success",
+        "duration_ms": 0.7,
+        "detail": "5 group(s) with confidence assigned",
+        "error": ""
+      }
+    ],
+    "decisions": [
+      {
+        "step": "compare identifiers",
+        "name": "exact SKU match",
+        "outcome": "2 definite duplicate pair(s)",
+        "detail": "rule: exact (normalised) SKU match = definite"
+      },
+      {
+        "step": "compare product attributes",
+        "name": "high attribute similarity",
+        "outcome": "3 possible duplicate pair(s)",
+        "detail": "score >= 0.85 high, >= 0.7 medium; hard conflicts (brand, color, size, material) = variants"
+      },
+      {
+        "step": "compare product attributes",
+        "name": "similar names but conflicting attributes",
+        "outcome": "6 pair(s) kept apart as variants",
+        "detail": "e.g. Cotton T-Shirt Red M vs Cotton T-Shirt Blue M (color); Cotton T-Shirt Red M vs Cotton T-Shirt Red L (size)"
+      }
+    ],
+    "tool_calls": [
+      {
+        "tool": "csv_database_reader",
+        "operation": "read",
+        "step": "Load products",
+        "status": "ok",
+        "attempts": 1,
+        "duration_ms": 1.6,
+        "error": ""
+      },
+      {
+        "tool": "text_similarity",
+        "operation": "normalize",
+        "step": "normalize names/SKUs",
+        "status": "ok",
+        "attempts": 1,
+        "duration_ms": 0.2,
+        "error": ""
+      },
+      {
+        "tool": "text_similarity",
+        "operation": "candidate_pairs",
+        "step": "compare product attributes",
+        "status": "ok",
+        "attempts": 1,
+        "duration_ms": 0.0,
+        "error": ""
+      },
+      {
+        "tool": "text_similarity",
+        "operation": "score_pairs",
+        "step": "compare product attributes",
+        "status": "ok",
+        "attempts": 1,
+        "duration_ms": 11.4,
+        "error": ""
+      }
+    ],
+    "warnings": [],
+    "error": "",
+    "error_hint": "",
+    "clarification": null,
+    "result": {
+      "summary": "Found 5 duplicate group(s) in 17 products: 2 definite, 3 possible.",
+      "data": {
+        "groups": [
+          {
+            "group": "G1",
+            "confidence": "definite",
+            "score": 1.0,
+            "records": [
+              {
+                "sku": "CAT-003",
+                "name": "Samsung Galaxy S22 256GB"
+              },
+              {
+                "sku": "CAT-003",
+                "name": "Galaxy S22 256 GB (Samsung)"
+              }
+            ],
+            "evidence": [
+              "same SKU"
+            ]
+          },
+          {
+            "group": "G2",
+            "confidence": "definite",
+            "score": 1.0,
+            "records": [
+              {
+                "sku": "CAT-004",
+                "name": "Cotton T-Shirt Red M"
+              },
+              {
+                "sku": "cat 004",
+                "name": "Basic Cotton Tee Red (M)"
+              }
+            ],
+            "evidence": [
+              "same SKU after normalisation ('CAT-004' = 'cat 004')"
+            ]
+          },
+          {
+            "group": "G3",
+            "confidence": "high",
+            "score": 1.0,
+            "records": [
+              {
+                "sku": "CAT-010",
+                "name": "Leather Wallet Brown"
+              },
+              {
+                "sku": "CAT-011",
+                "name": "Brown Leather Wallet"
+              }
+            ],
+            "evidence": [
+              "name similarity 1.00; matching: brand, color, material, category"
+            ]
+          },
+          {
+            "group": "G4",
+            "confidence": "high",
+            "score": 0.895,
+            "records": [
+              {
+                "sku": "CAT-001",
+                "name": "Apple iPhone 13 128GB Black"
+              },
+              {
+                "sku": "CAT-002",
+                "name": "iPhone 13 (128 GB) - Black"
+              }
+            ],
+            "evidence": [
+              "name similarity 0.84; matching: brand, color, size, category"
+            ]
+          },
+          {
+            "group": "G5",
+            "confidence": "medium",
+            "score": 0.838,
+            "records": [
+              {
+                "sku": "CAT-020",
+                "name": "Stainless Steel Water Bottle 750ml"
+              },
+              {
+                "sku": "CAT-021",
+                "name": "Aqua Stainless Water Bottle 750 ml"
+              }
+            ],
+            "evidence": [
+              "name similarity 0.75; matching: brand, color, size, material, category"
+            ]
+          }
+        ],
+        "scanned": 17
+      },
+      "artifacts": [
+        "examples/outputs/artifacts/20261007-072101-ba0f19/duplicate_groups.csv"
+      ],
+      "tables": [
+        {
+          "title": "Duplicate groups",
+          "columns": [
+            "Group",
+            "Confidence",
+            "SKU",
+            "Product",
+            "Brand",
+            "Colour",
+            "Size"
+          ],
+          "rows": [
+            [
+              "G1",
+              "DEFINITE",
+              "CAT-003",
+              "Samsung Galaxy S22 256GB",
+              "Samsung",
+              "Phantom Black",
+              "256GB"
+            ],
+            [
+              "G1",
+              "DEFINITE",
+              "CAT-003",
+              "Galaxy S22 256 GB (Samsung)",
+              "Samsung",
+              "Phantom Black",
+              "256GB"
+            ],
+            [
+              "G2",
+              "DEFINITE",
+              "CAT-004",
+              "Cotton T-Shirt Red M",
+              "BasicCo",
+              "Red",
+              "M"
+            ],
+            [
+              "G2",
+              "DEFINITE",
+              "cat 004",
+              "Basic Cotton Tee Red (M)",
+              "BasicCo",
+              "Red",
+              "M"
+            ],
+            [
+              "G3",
+              "POSSIBLE (high)",
+              "CAT-010",
+              "Leather Wallet Brown",
+              "Heritage",
+              "Brown",
+              ""
+            ],
+            [
+              "G3",
+              "POSSIBLE (high)",
+              "CAT-011",
+              "Brown Leather Wallet",
+              "Heritage",
+              "Brown",
+              ""
+            ],
+            [
+              "G4",
+              "POSSIBLE (high)",
+              "CAT-001",
+              "Apple iPhone 13 128GB Black",
+              "Apple",
+              "Black",
+              "128GB"
+            ],
+            [
+              "G4",
+              "POSSIBLE (high)",
+              "CAT-002",
+              "iPhone 13 (128 GB) - Black",
+              "Apple",
+              "Black",
+              "128GB"
+            ],
+            [
+              "G5",
+              "POSSIBLE (medium)",
+              "CAT-020",
+              "Stainless Steel Water Bottle 750ml",
+              "Aqua",
+              "Silver",
+              "750ml"
+            ],
+            [
+              "G5",
+              "POSSIBLE (medium)",
+              "CAT-021",
+              "Aqua Stainless Water Bottle 750 ml",
+              "Aqua",
+              "Silver",
+              "750ml"
+            ]
+          ]
+        },
+        {
+          "title": "Evidence",
+          "columns": [
+            "Group",
+            "Record A",
+            "Record B",
+            "Level",
+            "Score",
+            "Why"
+          ],
+          "rows": [
+            [
+              "G1",
+              "Samsung Galaxy S22 256GB",
+              "Galaxy S22 256 GB (Samsung)",
+              "definite",
+              "1.00",
+              "same SKU"
+            ],
+            [
+              "G2",
+              "Cotton T-Shirt Red M",
+              "Basic Cotton Tee Red (M)",
+              "definite",
+              "1.00",
+              "same SKU after normalisation ('CAT-004' = 'cat 004')"
+            ],
+            [
+              "G3",
+              "Leather Wallet Brown",
+              "Brown Leather Wallet",
+              "high",
+              "1.00",
+              "name similarity 1.00; matching: brand, color, material, category"
+            ],
+            [
+              "G4",
+              "Apple iPhone 13 128GB Black",
+              "iPhone 13 (128 GB) - Black",
+              "high",
+              "0.90",
+              "name similarity 0.84; matching: brand, color, size, category"
+            ],
+            [
+              "G5",
+              "Stainless Steel Water Bottle 750ml",
+              "Aqua Stainless Water Bottle 750 ml",
+              "medium",
+              "0.84",
+              "name similarity 0.75; matching: brand, color, size, material, category"
+            ]
+          ]
+        },
+        {
+          "title": "Kept apart as variants (not duplicates)",
+          "columns": [
+            "Record A",
+            "Record B",
+            "Differs in"
+          ],
+          "rows": [
+            [
+              "Cotton T-Shirt Red M",
+              "Cotton T-Shirt Blue M",
+              "color"
+            ],
+            [
+              "Cotton T-Shirt Red M",
+              "Cotton T-Shirt Red L",
+              "size"
+            ],
+            [
+              "Cotton T-Shirt Blue M",
+              "Cotton T-Shirt Red L",
+              "color, size"
+            ],
+            [
+              "Leather Wallet Brown",
+              "Black Leather Wallet",
+              "color"
+            ],
+            [
+              "Brown Leather Wallet",
+              "Black Leather Wallet",
+              "color"
+            ],
+            [
+              "Bluetooth Speaker Mini",
+              "Bluetooth Speaker Mini",
+              "brand"
+            ]
+          ]
+        }
+      ],
+      "text_blocks": []
+    }
+  }
+}]

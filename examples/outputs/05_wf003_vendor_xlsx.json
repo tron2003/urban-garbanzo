@@ -1,0 +1,270 @@
+[{
+  "request": "Process the vendor file data/vendor_file.xlsx and show invalid rows.",
+  "kind": "completed",
+  "message": "",
+  "routing": {
+    "workflow_id": "WF003",
+    "method": "heuristic",
+    "confidence": 0.697,
+    "reason": "matched: file, vendor, invalid, rows",
+    "note": "",
+    "candidates": [
+      [
+        "WF003",
+        0.697
+      ],
+      [
+        "WF002",
+        0.142
+      ],
+      [
+        "WF005",
+        0.024
+      ]
+    ]
+  },
+  "run": {
+    "run_id": "20261007-072100-4d4df1",
+    "workflow_id": "WF003",
+    "workflow_name": "Vendor File Processing",
+    "status": "success",
+    "duration_ms": 6.2,
+    "parameters": {
+      "vendor_file": "data/vendor_file.xlsx"
+    },
+    "parameter_sources": {
+      "vendor_file": "user"
+    },
+    "steps": [
+      {
+        "index": 1,
+        "name": "Read file",
+        "status": "success",
+        "duration_ms": 5.5,
+        "detail": "Read 5 data row(s) from vendor_file.xlsx (sheet 'Price List'), skipped 3 preamble row(s) above the header; 0 blank row(s) ignored",
+        "error": ""
+      },
+      {
+        "index": 2,
+        "name": "detect columns",
+        "status": "success",
+        "duration_ms": 0.1,
+        "detail": "Detected 5 known column(s): Part No -> sku, Description -> product_name, Unit Price -> price, On Hand -> quantity, Manufacturer -> brand",
+        "error": ""
+      },
+      {
+        "index": 3,
+        "name": "normalize column names",
+        "status": "success",
+        "duration_ms": 0.0,
+        "detail": "Normalized to: sku, product_name, price, quantity, brand",
+        "error": ""
+      },
+      {
+        "index": 4,
+        "name": "validate required fields",
+        "status": "success",
+        "duration_ms": 0.1,
+        "detail": "3 valid, 2 invalid",
+        "error": ""
+      },
+      {
+        "index": 5,
+        "name": "identify invalid rows",
+        "status": "success",
+        "duration_ms": 0.0,
+        "detail": "Built invalid-row report (2 row(s))",
+        "error": ""
+      },
+      {
+        "index": 6,
+        "name": "produce cleaned dataset",
+        "status": "success",
+        "duration_ms": 0.5,
+        "detail": "Wrote examples/outputs/artifacts/20261007-072100-4d4df1/vendor_cleaned.csv and examples/outputs/artifacts/20261007-072100-4d4df1/vendor_invalid_rows.csv",
+        "error": ""
+      }
+    ],
+    "decisions": [
+      {
+        "step": "detect columns",
+        "name": "required columns present",
+        "outcome": "yes",
+        "detail": "required: SKU and product name"
+      },
+      {
+        "step": "validate required fields",
+        "name": "row invalid if SKU or product name is missing",
+        "outcome": "2 invalid of 5",
+        "detail": ""
+      }
+    ],
+    "tool_calls": [
+      {
+        "tool": "excel_csv_parser",
+        "operation": "read",
+        "step": "Read file",
+        "status": "ok",
+        "attempts": 1,
+        "duration_ms": 5.5,
+        "error": ""
+      },
+      {
+        "tool": "data_validation",
+        "operation": "required_fields",
+        "step": "validate required fields",
+        "status": "ok",
+        "attempts": 1,
+        "duration_ms": 0.0,
+        "error": ""
+      },
+      {
+        "tool": "data_validation",
+        "operation": "duplicate_keys",
+        "step": "validate required fields",
+        "status": "ok",
+        "attempts": 1,
+        "duration_ms": 0.0,
+        "error": ""
+      },
+      {
+        "tool": "data_validation",
+        "operation": "numeric_fields",
+        "step": "validate required fields",
+        "status": "ok",
+        "attempts": 1,
+        "duration_ms": 0.0,
+        "error": ""
+      }
+    ],
+    "warnings": [],
+    "error": "",
+    "error_hint": "",
+    "clarification": null,
+    "result": {
+      "summary": "Processed 5 row(s): 3 valid, 2 invalid (0 blank row(s) ignored).",
+      "data": {
+        "total": 5,
+        "valid": 3,
+        "invalid": [
+          {
+            "source_row": 7,
+            "sku": "",
+            "product_name": "Snow Goggles",
+            "reasons": "missing sku"
+          },
+          {
+            "source_row": 8,
+            "sku": "NW-103",
+            "product_name": "",
+            "reasons": "missing product name"
+          }
+        ],
+        "columns": [
+          "sku",
+          "product_name",
+          "price",
+          "quantity",
+          "brand"
+        ],
+        "duplicates": {}
+      },
+      "artifacts": [
+        "examples/outputs/artifacts/20261007-072100-4d4df1/vendor_cleaned.csv",
+        "examples/outputs/artifacts/20261007-072100-4d4df1/vendor_invalid_rows.csv"
+      ],
+      "tables": [
+        {
+          "title": "Validation summary",
+          "columns": [
+            "Metric",
+            "Value"
+          ],
+          "rows": [
+            [
+              "Rows read",
+              5
+            ],
+            [
+              "Valid rows",
+              3
+            ],
+            [
+              "Invalid rows",
+              2
+            ],
+            [
+              "Blank rows ignored",
+              0
+            ],
+            [
+              "Duplicate SKUs (kept)",
+              0
+            ],
+            [
+              "Rows with non-numeric price",
+              0
+            ]
+          ]
+        },
+        {
+          "title": "Invalid rows",
+          "columns": [
+            "source_row",
+            "sku",
+            "product_name",
+            "reasons"
+          ],
+          "rows": [
+            [
+              7,
+              "(blank)",
+              "Snow Goggles",
+              "missing sku"
+            ],
+            [
+              8,
+              "NW-103",
+              "(blank)",
+              "missing product name"
+            ]
+          ]
+        },
+        {
+          "title": "Cleaned dataset (preview)",
+          "columns": [
+            "sku",
+            "product_name",
+            "price",
+            "quantity",
+            "brand"
+          ],
+          "rows": [
+            [
+              "NW-100",
+              "Merino Base Layer",
+              "24.00",
+              "40",
+              "NordicWear"
+            ],
+            [
+              "NW-101",
+              "Insulated Mittens",
+              "15.50",
+              "25",
+              "NordicWear"
+            ],
+            [
+              "NW-104",
+              "Hiking Poles",
+              "",
+              "18",
+              "NordicWear"
+            ]
+          ]
+        }
+      ],
+      "text_blocks": []
+    }
+  }
+}]

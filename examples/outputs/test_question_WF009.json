@@ -1,0 +1,300 @@
+[{
+  "request": "Assign this urgent task to the best available developer.",
+  "kind": "completed",
+  "message": "",
+  "routing": {
+    "workflow_id": "WF009",
+    "method": "heuristic",
+    "confidence": 0.863,
+    "reason": "matched: task, best, assign, available, <role found>, <priority found>",
+    "note": "",
+    "candidates": [
+      [
+        "WF009",
+        0.863
+      ],
+      [
+        "WF005",
+        0.032
+      ],
+      [
+        "WF006",
+        0.032
+      ]
+    ]
+  },
+  "run": {
+    "run_id": "20261007-072100-d15ad5",
+    "workflow_id": "WF009",
+    "workflow_name": "Employee Task Assignment",
+    "status": "success",
+    "duration_ms": 4.0,
+    "parameters": {
+      "role": "developer",
+      "priority": "high",
+      "task_description": "Fix the checkout page bug in the React storefront: the pay button is unresponsive on mobile Safari. Likely a JavaScript event-handling issue.",
+      "employees_file": "data/employees.csv"
+    },
+    "parameter_sources": {
+      "role": "user",
+      "priority": "user",
+      "task_description": "sample",
+      "employees_file": "sample"
+    },
+    "steps": [
+      {
+        "index": 1,
+        "name": "Understand task requirements",
+        "status": "success",
+        "duration_ms": 3.8,
+        "detail": "Skills: javascript, react; priority high; deadline none; 8h (bundled sample task)",
+        "error": ""
+      },
+      {
+        "index": 2,
+        "name": "compare employee skills",
+        "status": "success",
+        "duration_ms": 0.1,
+        "detail": "3 employee(s) cover all required skills",
+        "error": ""
+      },
+      {
+        "index": 3,
+        "name": "check current workload",
+        "status": "success",
+        "duration_ms": 0.0,
+        "detail": "2 suitable after workload check",
+        "error": ""
+      },
+      {
+        "index": 4,
+        "name": "rank candidates",
+        "status": "success",
+        "duration_ms": 0.1,
+        "detail": "Ranked 2 candidate(s)",
+        "error": ""
+      },
+      {
+        "index": 5,
+        "name": "select employee",
+        "status": "success",
+        "duration_ms": 0.0,
+        "detail": "Selected Priya Nair",
+        "error": ""
+      },
+      {
+        "index": 6,
+        "name": "generate assignment summary",
+        "status": "success",
+        "duration_ms": 0.0,
+        "detail": "Assign to Priya Nair (Frontend Developer). Priority high, deadline none set.",
+        "error": ""
+      }
+    ],
+    "decisions": [
+      {
+        "step": "Understand task requirements",
+        "name": "task requirements",
+        "outcome": "skills: javascript, react; role: developer; priority: high",
+        "detail": "deadline none; 8h (assumed)"
+      },
+      {
+        "step": "compare employee skills",
+        "name": "skill match",
+        "outcome": "3 of 8 employees have every required skill",
+        "detail": "required: javascript, react"
+      },
+      {
+        "step": "check current workload",
+        "name": "capacity check",
+        "outcome": "2 employee(s) suitable",
+        "detail": "free hours (pro-rated to the deadline) >= estimated hours"
+      },
+      {
+        "step": "rank candidates",
+        "name": "ranking weights",
+        "outcome": "skills 50% / capacity 50%",
+        "detail": "urgent tasks weight free capacity more"
+      },
+      {
+        "step": "select employee",
+        "name": "assignee",
+        "outcome": "Priya Nair (Frontend Developer)",
+        "detail": "score 0.72"
+      }
+    ],
+    "tool_calls": [
+      {
+        "tool": "employee_task_db",
+        "operation": "employees",
+        "step": "Understand task requirements",
+        "status": "ok",
+        "attempts": 1,
+        "duration_ms": 1.0,
+        "error": ""
+      },
+      {
+        "tool": "ranking_logic",
+        "operation": "rank",
+        "step": "rank candidates",
+        "status": "ok",
+        "attempts": 1,
+        "duration_ms": 0.1,
+        "error": ""
+      }
+    ],
+    "warnings": [
+      "No effort estimate given - assumed 8 hours (one working day)."
+    ],
+    "error": "",
+    "error_hint": "",
+    "clarification": null,
+    "result": {
+      "summary": "Assign to Priya Nair (Frontend Developer). Priority high, deadline none set.",
+      "data": {
+        "decision": "assign",
+        "employee": "Priya Nair",
+        "employee_id": "E02",
+        "score": 0.725,
+        "priority": "high",
+        "deadline": "none set",
+        "reasoning": "Priya Nair has javascript (5/5), react (5/5), 18h free this week (22/40h booked, 3 open task(s)), and scored highest (0.72) among 2 suitable candidate(s).",
+        "ranking": [
+          "Priya Nair",
+          "Sara Khan"
+        ]
+      },
+      "artifacts": [],
+      "tables": [
+        {
+          "title": "Recommended assignment",
+          "columns": [
+            "Item",
+            "Detail"
+          ],
+          "rows": [
+            [
+              "Employee",
+              "Priya Nair (Frontend Developer)"
+            ],
+            [
+              "Reasoning",
+              "Priya Nair has javascript (5/5), react (5/5), 18h free this week (22/40h booked, 3 open task(s)), and scored highest (0.72) among 2 suitable candidate(s)."
+            ],
+            [
+              "Priority",
+              "high"
+            ],
+            [
+              "Deadline",
+              "none set"
+            ]
+          ]
+        },
+        {
+          "title": "Task",
+          "columns": [
+            "Item",
+            "Detail"
+          ],
+          "rows": [
+            [
+              "Task",
+              "Fix the checkout page bug in the React storefront: the pay button is unresponsive on mobile Safari. Likely a JavaScript event-handling issue."
+            ],
+            [
+              "Required skills",
+              "javascript, react"
+            ],
+            [
+              "Role filter",
+              "developer"
+            ],
+            [
+              "Priority",
+              "high"
+            ],
+            [
+              "Deadline",
+              "none set"
+            ],
+            [
+              "Estimated effort",
+              "8 h"
+            ]
+          ]
+        },
+        {
+          "title": "Candidate ranking",
+          "columns": [
+            "#",
+            "Name",
+            "Role",
+            "Skill score",
+            "Free",
+            "Total"
+          ],
+          "rows": [
+            [
+              1,
+              "Priya Nair",
+              "Frontend Developer",
+              "1.00",
+              "18h",
+              "0.72"
+            ],
+            [
+              2,
+              "Sara Khan",
+              "Full Stack Developer",
+              "0.80",
+              "10h",
+              "0.53"
+            ]
+          ]
+        },
+        {
+          "title": "Not suitable",
+          "columns": [
+            "Name",
+            "Role",
+            "Why not"
+          ],
+          "rows": [
+            [
+              "Aarav Mehta",
+              "Senior Developer",
+              "missing skill(s): javascript, react; insufficient capacity: ~6.0h available vs 8h needed"
+            ],
+            [
+              "Rohan Gupta",
+              "Backend Developer",
+              "missing skill(s): javascript, react; insufficient capacity: ~2.0h available vs 8h needed"
+            ],
+            [
+              "Vikram Singh",
+              "DevOps Engineer",
+              "role 'DevOps Engineer' does not match 'developer'; missing skill(s): javascript, react"
+            ],
+            [
+              "Meera Joshi",
+              "QA Engineer",
+              "role 'QA Engineer' does not match 'developer'; missing skill(s): react"
+            ],
+            [
+              "Karan Malhotra",
+              "Frontend Developer",
+              "not available (on leave)"
+            ],
+            [
+              "Neha Verma",
+              "UI Designer",
+              "role 'UI Designer' does not match 'developer'; missing skill(s): javascript, react"
+            ]
+          ]
+        }
+      ],
+      "text_blocks": []
+    }
+  }
+}]

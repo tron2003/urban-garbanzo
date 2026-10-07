@@ -1,0 +1,86 @@
+### Request
+
+> Which workflows are failing most often?
+
+**Selected workflow:** `WF010` - Workflow Performance Report  
+**Routing:** heuristic (confidence 0.55) - matched: workflow, fail, often, most  
+**Parameters:** `log_file=data/execution_logs.csv` *(bundled sample)*
+
+**Steps executed**
+
+1. **success** - Load execution logs - Loaded 982 log row(s) from execution_logs.csv (bundled sample data)
+2. **success** - calculate success/failure rate - 179 runs across 10 workflows; overall failure rate 8.98%
+3. **success** - calculate average execution time - Average run time computed for 10 workflow(s)
+4. **success** - identify frequent errors - 15 failed step(s); 8 distinct frequent error(s)
+5. **success** - identify slow steps - 6 step(s) above 2000 ms
+6. **success** - generate recommendations - 6 recommendation(s)
+
+**Conditions / decisions**
+
+- failure rate > threshold: **3 workflow(s) flagged: WF003, WF004, WF005** (threshold 10.0% (strictly greater); needs_input runs are not failures)
+- avg execution time > threshold: **1 workflow(s) flagged: WF004** (threshold 5000 ms)
+- avg step time > threshold: **6 slow step(s)** (threshold 2000 ms)
+
+**Tools / API calls**
+
+- csv_database_reader.read x1 (10 ms)
+- calculator.rate x11 (0 ms)
+- calculator.mean x10 (0 ms)
+- reporting.top_counts x1 (0 ms)
+- reporting.group_stats x1 (2 ms)
+
+**Result (success)**
+
+3 of 10 workflows exceed the 10% failure-rate threshold; failing most often: WF003 (18.18%), WF004 (17.65%), WF005 (16.00%). 1 workflow(s) exceed the average-time threshold.
+
+_Workflow metrics (worst failure rate first)_
+
+| ID | Workflow | Runs | OK | Failed | Asked user | Failure rate | Avg ms | Flags |
+|---|---|---|---|---|---|---|---|---|
+| WF003 | Vendor File Processing | 22 | 18 | 4 | 0 | 18.18% | 1,842 | HIGH FAILURE RATE |
+| WF004 | Product Description Generator | 18 | 14 | 3 | 1 | 17.65% | 12,837 | HIGH FAILURE RATE, SLOW |
+| WF005 | Customer Order Status | 30 | 21 | 4 | 5 | 16.00% | 2,331 | HIGH FAILURE RATE |
+| WF007 | Marketing Campaign Brief | 14 | 10 | 1 | 3 | 9.09% | 3,790 | ok |
+| WF008 | SEO Keyword Classification | 16 | 15 | 1 | 0 | 6.25% | 3,607 | ok |
+| WF002 | Product Price Validation | 20 | 19 | 1 | 0 | 5.00% | 696 | ok |
+| WF001 | Inventory Restock Check | 24 | 22 | 1 | 1 | 4.35% | 593 | ok |
+| WF006 | Duplicate Product Detection | 12 | 12 | 0 | 0 | 0.00% | 4,065 | ok |
+| WF009 | Employee Task Assignment | 15 | 13 | 0 | 2 | 0.00% | 1,433 | ok |
+| WF010 | Workflow Performance Report | 8 | 8 | 0 | 0 | 0.00% | 970 | ok |
+
+_Most frequent errors_
+
+| Workflow | Step | Error type | Message | Count |
+|---|---|---|---|---|
+| WF005 | retrieve shipment information | TransientToolError | shipment_lookup: carrier API timed out (simulated) | 4 |
+| WF004 | create product description | TransientToolError | llm: LLM endpoint unreachable: timed out | 3 |
+| WF003 | detect columns | StepError | Cannot find the required column(s): sku. | 3 |
+| WF002 | match products by SKU | StepError | No SKUs match between the product file and the vendor price list. | 1 |
+| WF001 | Load inventory | ToolError | File not found: inventory.csv | 1 |
+| WF008 | Read keywords | ToolError | File not found: keywords.csv | 1 |
+| WF007 | summarize products | StepError | No products matched (collection contains 'summer'). | 1 |
+| WF003 | Read file | ToolError | unsupported file type '.xls' (use .csv or .xlsx) | 1 |
+
+_Slow steps (avg > 2,000 ms)_
+
+| Workflow | Step | Avg ms | p95 ms | Runs |
+|---|---|---|---|---|
+| WF004 | create product description | 4,036 | 5,582 | 17 |
+| WF004 | generate meta description | 3,474 | 4,317 | 14 |
+| WF004 | generate short description | 3,436 | 4,250 | 14 |
+| WF004 | generate SEO title | 3,179 | 4,301 | 14 |
+| WF006 | compare product attributes | 3,021 | 3,588 | 12 |
+| WF008 | classify search intent | 2,334 | 3,104 | 15 |
+
+**Recommendations**
+
+```text
+1. [Reliability] WF003 Vendor File Processing fails 18.18% of runs. Most frequent: 'Cannot find the required column(s): sku.' in step 'detect columns' (3x) - validate inputs earlier and return a specific correction message; add schema checks before this step runs
+2. [Reliability] WF004 Product Description Generator fails 17.65% of runs. Most frequent: 'llm: LLM endpoint unreachable: timed out' in step 'create product description' (3x) - add retries with exponential back-off and a graceful fallback for this dependency; review the timeout setting and add alerting
+3. [Reliability] WF005 Customer Order Status fails 16.00% of runs. Most frequent: 'shipment_lookup: carrier API timed out (simulated)' in step 'retrieve shipment information' (4x) - add retries with exponential back-off and a graceful fallback for this dependency; review the timeout setting and add alerting
+4. [Speed] WF004 Product Description Generator averages 12,837 ms per run (threshold 5,000). Slowest step 'create product description' averages 4,036 ms - reduce LLM latency: shorter prompts, a smaller/faster model, cache repeated prompts, or run independent generation steps concurrently
+5. [Speed] WF006 Duplicate Product Detection: step 'compare product attributes' averages 3,021 ms (p95 3,588) - avoid all-pairs comparison: block candidates (inverted index / blocking keys) and vectorise the scoring
+6. [Speed] WF008 SEO Keyword Classification: step 'classify search intent' averages 2,334 ms (p95 3,104) - reduce LLM latency: shorter prompts, a smaller/faster model, cache repeated prompts, or run independent generation steps concurrently
+```
+
+Files written: `examples/outputs/artifacts/20261007-072101-ac0950/performance_report.csv`

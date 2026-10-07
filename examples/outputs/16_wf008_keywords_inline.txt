@@ -1,0 +1,62 @@
+==============================================================================
+ Request: Classify these keywords: buy denim jacket, how to wash denim, denim jacket men, nike official site
+==============================================================================
+ Selected workflow : WF008 - SEO Keyword Classification
+ Routing           : heuristic, confidence 0.66
+ Why               : matched: keyword, classify, <keywords found>
+ Runner-up         : WF001 (0.00)
+ Parameters        : keywords=buy denim jacket, how to wash denim, denim jacket men, nike…; categories_file=data/categories.csv [bundled sample]
+
+Steps executed
+  1. [OK  ] Read keywords  (0 ms)
+        Read 4 keyword(s) supplied in the request; no search volumes available
+  2. [OK  ] remove duplicates  (0 ms)
+        4 unique keyword(s); 0 duplicate(s) removed
+  3. [OK  ] classify search intent  (0 ms)
+        1 transactional, 1 commercial, 1 informational, 1 navigational
+  4. [OK  ] map keywords to categories  (1 ms)
+        3 of 4 keyword(s) mapped to a category
+  5. [OK  ] identify high-priority keywords  (0 ms)
+        1 high-priority keyword(s)
+  6. [OK  ] export results  (0 ms)
+        Exported 4 row(s) to examples/outputs/artifacts/20261007-072101-d9aac2/keyword_report.csv
+
+Conditions / decisions   [Excel rule: Classify each keyword as informational, commercial, transactional, or navigational]
+  - duplicate keywords: 0 removed  (compared case-, spacing- and punctuation-insensitively; max volume kept)
+  - intent source: rules: 4, llm: 0  (LLM is only used for low-confidence keywords)
+  - category mapping: 3 mapped, 1 uncategorized  (token overlap with category_terms)
+  - high priority: 1 keyword(s)  (score >= 1000 (volume x intent weight); unmapped capped at medium)
+
+Tools / API calls
+  llm_classifier.classify_intent x1 (0 ms)
+  csv_reader.read x1 (1 ms)
+
+Warnings
+  ! 1 keyword(s) have a low-confidence intent label (bare product phrases default to 'commercial'). Configure an LLM to refine them.
+
+Result  [SUCCESS, 2 ms total]
+  Classified 4 unique keyword(s): 1 transactional, 1 commercial, 1 informational, 1 navigational; 1 high priority.
+
+  Intent breakdown
+  Intent        | Keywords
+  --------------+---------
+  Transactional | 1
+  Commercial    | 1
+  Informational | 1
+  Navigational  | 1
+
+  High-priority keywords
+  Keyword          | Searches | Intent        | Category | Target page
+  -----------------+----------+---------------+----------+---------------------
+  buy denim jacket |          | transactional | Apparel  | /collections/apparel
+
+  Keyword report
+  Keyword            | Searches | Intent        | Category      | Priority | Target page
+  -------------------+----------+---------------+---------------+----------+-----------------------------------------------
+  buy denim jacket   |          | transactional | Apparel       | high     | /collections/apparel
+  denim jacket men   |          | commercial    | Apparel       | medium   | /collections/apparel
+  how to wash denim  |          | informational | Apparel       | low      | /blog/how-to-wash-denim (new guide, link to /…
+  nike official site |          | navigational  | Uncategorized | low      | No matching page - review manually
+
+Files written
+  examples/outputs/artifacts/20261007-072101-d9aac2/keyword_report.csv

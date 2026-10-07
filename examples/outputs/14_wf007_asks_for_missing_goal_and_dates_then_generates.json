@@ -1,0 +1,531 @@
+[{
+  "request": "Create a campaign brief for the new collection.",
+  "kind": "needs_input",
+  "message": "Before I write the brief I need: campaign goal and campaign dates (start and end). For example: 'Goal: increase autumn sales, from 2026-11-01 to 2026-11-30'. Audience and promotion are optional.",
+  "routing": {
+    "workflow_id": "WF007",
+    "method": "heuristic",
+    "confidence": 0.778,
+    "reason": "matched: campaign, brief, collection, create, <collection found>",
+    "note": "",
+    "candidates": [
+      [
+        "WF007",
+        0.778
+      ],
+      [
+        "WF004",
+        0.035
+      ],
+      [
+        "WF001",
+        0.0
+      ]
+    ]
+  },
+  "run": {
+    "run_id": "20261007-072101-ffcc3c",
+    "workflow_id": "WF007",
+    "workflow_name": "Marketing Campaign Brief",
+    "status": "needs_input",
+    "duration_ms": 0.0,
+    "parameters": {
+      "collection": "new",
+      "products_file": "data/products.csv"
+    },
+    "parameter_sources": {
+      "collection": "user",
+      "products_file": "sample"
+    },
+    "steps": [
+      {
+        "index": 1,
+        "name": "Validate inputs",
+        "status": "needs_input",
+        "duration_ms": 0.0,
+        "detail": "",
+        "error": "Before I write the brief I need: campaign goal and campaign dates (start and end). For example: 'Goal: increase autumn sales, from 2026-11-01 to 2026-11-30'. Audience and promotion are optional."
+      },
+      {
+        "index": 2,
+        "name": "identify campaign objective",
+        "status": "skipped",
+        "duration_ms": 0.0,
+        "detail": "",
+        "error": ""
+      },
+      {
+        "index": 3,
+        "name": "summarize products",
+        "status": "skipped",
+        "duration_ms": 0.0,
+        "detail": "",
+        "error": ""
+      },
+      {
+        "index": 4,
+        "name": "create messaging",
+        "status": "skipped",
+        "duration_ms": 0.0,
+        "detail": "",
+        "error": ""
+      },
+      {
+        "index": 5,
+        "name": "create channel recommendations",
+        "status": "skipped",
+        "duration_ms": 0.0,
+        "detail": "",
+        "error": ""
+      },
+      {
+        "index": 6,
+        "name": "create campaign checklist",
+        "status": "skipped",
+        "duration_ms": 0.0,
+        "detail": "",
+        "error": ""
+      }
+    ],
+    "decisions": [
+      {
+        "step": "Validate inputs",
+        "name": "goal and dates present",
+        "outcome": "no - asking before generating",
+        "detail": "Excel rule: request missing goal/dates first"
+      }
+    ],
+    "tool_calls": [],
+    "warnings": [],
+    "error": "",
+    "error_hint": "",
+    "clarification": "Before I write the brief I need: campaign goal and campaign dates (start and end). For example: 'Goal: increase autumn sales, from 2026-11-01 to 2026-11-30'. Audience and promotion are optional.",
+    "result": null
+  }
+},
+{
+  "request": "Goal: increase autumn sales, from 2026-11-01 to 2026-11-30, promotion: 15% off for the first 48 hours, audience: young professionals",
+  "kind": "completed",
+  "message": "",
+  "routing": {
+    "workflow_id": "WF007",
+    "method": "continued",
+    "confidence": 1.0,
+    "reason": "your reply answers the question I asked",
+    "note": "",
+    "candidates": []
+  },
+  "run": {
+    "run_id": "20261007-072101-f7f612",
+    "workflow_id": "WF007",
+    "workflow_name": "Marketing Campaign Brief",
+    "status": "success",
+    "duration_ms": 3.1,
+    "parameters": {
+      "campaign_goal": "increase autumn sales",
+      "start_date": "2026-11-01",
+      "end_date": "2026-11-30",
+      "target_audience": "young professionals",
+      "promotion": "15% off for the first 48 hours",
+      "collection": "new",
+      "products_file": "data/products.csv"
+    },
+    "parameter_sources": {
+      "campaign_goal": "user",
+      "start_date": "user",
+      "end_date": "user",
+      "target_audience": "user",
+      "promotion": "user",
+      "collection": "user",
+      "products_file": "sample"
+    },
+    "steps": [
+      {
+        "index": 1,
+        "name": "Validate inputs",
+        "status": "success",
+        "duration_ms": 0.1,
+        "detail": "Goal and dates present (30-day campaign)",
+        "error": ""
+      },
+      {
+        "index": 2,
+        "name": "identify campaign objective",
+        "status": "success",
+        "duration_ms": 0.0,
+        "detail": "Objective: Sales & conversion",
+        "error": ""
+      },
+      {
+        "index": 3,
+        "name": "summarize products",
+        "status": "success",
+        "duration_ms": 2.0,
+        "detail": "5 product(s) selected (launch_status = new) across 3 categories",
+        "error": ""
+      },
+      {
+        "index": 4,
+        "name": "create messaging",
+        "status": "success",
+        "duration_ms": 0.0,
+        "detail": "Headline: 'Autumn 2026: made to be bought' via template (no LLM configured)",
+        "error": ""
+      },
+      {
+        "index": 5,
+        "name": "create channel recommendations",
+        "status": "success",
+        "duration_ms": 0.4,
+        "detail": "6 channel(s) recommended for 'Sales & conversion'",
+        "error": ""
+      },
+      {
+        "index": 6,
+        "name": "create campaign checklist",
+        "status": "success",
+        "duration_ms": 0.5,
+        "detail": "15 checklist items; brief saved to examples/outputs/artifacts/20261007-072101-f7f612/campaign_brief.md",
+        "error": ""
+      }
+    ],
+    "decisions": [
+      {
+        "step": "Validate inputs",
+        "name": "goal and dates present",
+        "outcome": "yes",
+        "detail": "2026-11-01 to 2026-11-30 (30 days)"
+      },
+      {
+        "step": "identify campaign objective",
+        "name": "objective classification",
+        "outcome": "Sales & conversion",
+        "detail": "from goal: 'increase autumn sales'"
+      },
+      {
+        "step": "create channel recommendations",
+        "name": "channel mix",
+        "outcome": "6 channels",
+        "detail": "driven by objective 'Sales & conversion' and audience"
+      }
+    ],
+    "tool_calls": [
+      {
+        "tool": "product_data_reader",
+        "operation": "select",
+        "step": "summarize products",
+        "status": "ok",
+        "attempts": 1,
+        "duration_ms": 1.8,
+        "error": ""
+      }
+    ],
+    "warnings": [],
+    "error": "",
+    "error_hint": "",
+    "clarification": null,
+    "result": {
+      "summary": "Campaign brief ready: Sales & conversion campaign for Autumn 2026, 2026-11-01 to 2026-11-30, 5 product(s), 6 channels, 15 checklist items.",
+      "data": {
+        "objective": "Sales & conversion",
+        "goal": "increase autumn sales",
+        "start": "2026-11-01",
+        "end": "2026-11-30",
+        "products": [
+          "SKU-1003",
+          "SKU-1005",
+          "SKU-1006",
+          "SKU-1007",
+          "SKU-1008"
+        ],
+        "messaging": {
+          "headline": "Autumn 2026: made to be bought",
+          "tagline": "Sales & conversion campaign, 01 Nov - 30 Nov 2026",
+          "key_messages": [
+            "5 products across Accessories, Apparel, Footwear.",
+            "Built from Canvas, Denim, Merino wool, Mesh.",
+            "Prices from 12.50 to 89.90.",
+            "Offer: 15% off for the first 48 hours.",
+            "Made for young professionals."
+          ],
+          "call_to_action": "Shop now"
+        },
+        "channels": [
+          "Email & SMS",
+          "Paid search & shopping ads",
+          "Retargeting (paid social/display)",
+          "Onsite banners & product badges",
+          "TikTok creators",
+          "Promo code on landing page + checkout"
+        ],
+        "timeline": [
+          "Preparation",
+          "Launch week",
+          "Sustain & optimise",
+          "Final push",
+          "Wrap-up"
+        ],
+        "checklist_items": 15,
+        "assumptions": []
+      },
+      "artifacts": [
+        "examples/outputs/artifacts/20261007-072101-f7f612/campaign_brief.md"
+      ],
+      "tables": [
+        {
+          "title": "Objective & audience",
+          "columns": [
+            "Item",
+            "Detail"
+          ],
+          "rows": [
+            [
+              "Objective",
+              "Sales & conversion - increase autumn sales"
+            ],
+            [
+              "KPIs",
+              "revenue, conversion rate, average order value, ROAS"
+            ],
+            [
+              "Audience",
+              "young professionals"
+            ],
+            [
+              "Promotion",
+              "15% off for the first 48 hours"
+            ],
+            [
+              "Dates",
+              "2026-11-01 to 2026-11-30"
+            ],
+            [
+              "Messaging by",
+              "template (no LLM configured)"
+            ]
+          ]
+        },
+        {
+          "title": "Products",
+          "columns": [
+            "SKU",
+            "Name",
+            "Category",
+            "Price"
+          ],
+          "rows": [
+            [
+              "SKU-1003",
+              "Denim Jacket",
+              "Apparel",
+              "79.00"
+            ],
+            [
+              "SKU-1005",
+              "Canvas Tote Bag",
+              "Accessories",
+              "12.50"
+            ],
+            [
+              "SKU-1006",
+              "Running Shoes (42)",
+              "Footwear",
+              "89.90"
+            ],
+            [
+              "SKU-1007",
+              "Running Shoes (43)",
+              "Footwear",
+              "89.90"
+            ],
+            [
+              "SKU-1008",
+              "Wool Scarf",
+              "Accessories",
+              "24.00"
+            ]
+          ]
+        },
+        {
+          "title": "Channel recommendations",
+          "columns": [
+            "Channel",
+            "Role",
+            "Why",
+            "KPI"
+          ],
+          "rows": [
+            [
+              "Email & SMS",
+              "Primary",
+              "Highest-converting owned channel",
+              "conversion rate, revenue per send"
+            ],
+            [
+              "Paid search & shopping ads",
+              "Primary",
+              "Captures high purchase intent",
+              "ROAS, CPA"
+            ],
+            [
+              "Retargeting (paid social/display)",
+              "Secondary",
+              "Brings back cart/product viewers",
+              "ROAS, assisted conversions"
+            ],
+            [
+              "Onsite banners & product badges",
+              "Secondary",
+              "Reinforces the offer at decision time",
+              "banner CTR, conversion"
+            ],
+            [
+              "TikTok creators",
+              "Secondary",
+              "Audience skews young and short-video native",
+              "views, saves"
+            ],
+            [
+              "Promo code on landing page + checkout",
+              "Supporting",
+              "Needed to redeem: 15% off for the first 48 hours",
+              "code redemption rate"
+            ]
+          ]
+        },
+        {
+          "title": "Timeline",
+          "columns": [
+            "Phase",
+            "From",
+            "To",
+            "Focus"
+          ],
+          "rows": [
+            [
+              "Preparation",
+              "2026-10-18",
+              "2026-10-31",
+              "Brief sign-off, creative, landing page, tracking, inventory check"
+            ],
+            [
+              "Launch week",
+              "2026-11-01",
+              "2026-11-07",
+              "Go live, daily monitoring"
+            ],
+            [
+              "Sustain & optimise",
+              "2026-11-08",
+              "2026-11-23",
+              "Weekly optimisation, creative refresh"
+            ],
+            [
+              "Final push",
+              "2026-11-24",
+              "2026-11-30",
+              "Last-chance messaging"
+            ],
+            [
+              "Wrap-up",
+              "2026-12-01",
+              "2026-12-07",
+              "Results, learnings, report"
+            ]
+          ]
+        },
+        {
+          "title": "Checklist",
+          "columns": [
+            "Due",
+            "",
+            "Task"
+          ],
+          "rows": [
+            [
+              "2026-10-18",
+              "",
+              "Confirm objective, KPIs and budget with stakeholders"
+            ],
+            [
+              "2026-10-22",
+              "",
+              "Approve creative assets and copy (headline, key messages, CTA)"
+            ],
+            [
+              "2026-10-25",
+              "",
+              "Build collection landing page; load product feed; configure promo '15% off for the first 48 hours'"
+            ],
+            [
+              "2026-10-27",
+              "",
+              "Check stock for featured SKUs (run the inventory restock check)"
+            ],
+            [
+              "2026-10-29",
+              "",
+              "Schedule emails, social posts and ad campaigns"
+            ],
+            [
+              "2026-10-31",
+              "",
+              "Final QA: links, UTM tracking, analytics goals"
+            ],
+            [
+              "2026-11-01",
+              "",
+              "GO LIVE - publish across all channels"
+            ],
+            [
+              "2026-11-02",
+              "",
+              "First-day performance check; fix any broken links"
+            ],
+            [
+              "2026-11-08",
+              "",
+              "Weekly performance review and optimisation"
+            ],
+            [
+              "2026-11-15",
+              "",
+              "Weekly performance review and optimisation"
+            ],
+            [
+              "2026-11-22",
+              "",
+              "Weekly performance review and optimisation"
+            ],
+            [
+              "2026-11-29",
+              "",
+              "Weekly performance review and optimisation"
+            ],
+            [
+              "2026-11-30",
+              "",
+              "Close campaign / end promotion"
+            ],
+            [
+              "2026-12-03",
+              "",
+              "Collect results from all channels"
+            ],
+            [
+              "2026-12-07",
+              "",
+              "Publish performance report vs KPIs and record learnings"
+            ]
+          ]
+        }
+      ],
+      "text_blocks": [
+        {
+          "title": "Messaging",
+          "body": "Headline: Autumn 2026: made to be bought\nTagline: Sales & conversion campaign, 01 Nov - 30 Nov 2026\n- 5 products across Accessories, Apparel, Footwear.\n- Built from Canvas, Denim, Merino wool, Mesh.\n- Prices from 12.50 to 89.90.\n- Offer: 15% off for the first 48 hours.\n- Made for young professionals.\nCTA: Shop now"
+        }
+      ]
+    }
+  }
+}]

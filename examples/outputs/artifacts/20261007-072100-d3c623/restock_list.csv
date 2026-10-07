@@ -1,0 +1,8 @@
+SKU,Product,Current stock,Minimum,Suggested reorder qty,Target basis
+SKU-1004,Leather Wallet,0,20,60,max_stock
+SKU-1008,Wool Scarf,3,20,37,2 x minimum
+SKU-1003,Denim Jacket,5,20,35,max_stock
+SKU-1006,Running Shoes (42),8,20,72,max_stock
+SKU-1012,Desk Lamp,9,20,21,max_stock
+SKU-1001,Classic Cotton T-Shirt (M),12,20,88,max_stock
+SKU-1010,Yoga Mat,14,20,36,max_stock

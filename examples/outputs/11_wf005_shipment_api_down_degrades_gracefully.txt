@@ -1,0 +1,45 @@
+==============================================================================
+ Request: Where is order ORD-1007?
+==============================================================================
+ Selected workflow : WF005 - Customer Order Status
+ Routing           : heuristic, confidence 0.60
+ Why               : matched: order, ord, <order_id found>
+ Runner-up         : WF001 (0.00)
+ Parameters        : order_id=ORD-1007
+
+Steps executed
+  1. [OK  ] Validate identifier  (0 ms)
+        Using ORD-1007
+  2. [OK  ] search order data  (0 ms)
+        Found 1 order(s)
+  3. [OK  ] retrieve order status  (0 ms)
+        ORD-1007: Shipped
+  4. [OK  ] retrieve shipment information  (601 ms)
+        ORD-1007: no tracking
+  5. [OK  ] summarize current status  (0 ms)
+        Summarized 1 order(s)
+
+Conditions / decisions   [Excel rule: If no order is found, ask for another identifier]
+  - identifier type: order id
+  - order found: yes  (1 order(s) for ORD-1007)
+  - shipment lookup failed: degraded response  (ORD-1007: returning order status only)
+
+Tools / API calls
+  order_api.search x1 (0 ms)
+  shipment_lookup x1 (601 ms) - FAILED: carrier API timed out (simulated)
+
+Warnings
+  ! ORD-1007: shipment lookup failed after retries (carrier API timed out (simulated)); status returned without tracking
+
+Result  [SUCCESS, 601 ms total]
+  ORD-1007 is shipped. Shipment information is temporarily unavailable (carrier lookup failed)..
+
+  Order status & shipment
+  Order    | Status  | Carrier | Tracking # | Shipment | ETA | Last event / note
+  ---------+---------+---------+------------+----------+-----+-----------------------------------------------
+  ORD-1007 | Shipped | -       | -          | -        | -   | Shipment information is temporarily unavailab…
+
+  Items
+  Order    | Item       | SKU      | Qty
+  ---------+------------+----------+----
+  ORD-1007 | Wool Scarf | SKU-1008 | 1
