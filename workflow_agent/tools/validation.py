@@ -25,11 +25,13 @@ def data_validation(svc, op: str, rows: list[dict], **kw) -> Any:
     if op == "duplicate_keys":
         key = kw["key"]
         seen: dict[str, list[int]] = defaultdict(list)
+        label: dict[str, str] = {}
         for r in rows:
             k = norm_sku(r.get(key))
             if k:
+                label.setdefault(k, str(r.get(key)).strip())     # report the SKU as written in the file
                 seen[k].append(r.get("_row", 0))
-        return {k: v for k, v in seen.items() if len(v) > 1}
+        return {label[k]: v for k, v in seen.items() if len(v) > 1}
     if op == "numeric_fields":
         from ..utils import to_decimal
         bad = []
