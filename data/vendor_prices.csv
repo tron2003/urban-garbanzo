@@ -1,0 +1,13 @@
+sku,vendor_price,vendor_name
+SKU-1001,20.49,Northwind Textiles
+ sku-1002 ,22.99,Northwind Textiles
+SKU-1003,71.10,Northwind Textiles
+SKU-1004,39.00,Leatherworks Ltd
+SKU-1005,12.50,Leatherworks Ltd
+SKU-1006,95.00,StrideCo
+SKU-1007,89.90,StrideCo
+SKU-1008,31.50,Northwind Textiles
+SKU-1010,26.50,FitSupply
+SKU-1011,N/A,SoundHub
+SKU-1012,34.00,BrightHome
+SKU-9999,15.00,Unknown Vendor

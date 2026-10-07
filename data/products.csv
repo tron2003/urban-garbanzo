@@ -1,0 +1,13 @@
+sku,name,category,collection,launch_status,price,material,color,target_audience
+SKU-1001,Classic Cotton T-Shirt (M),Apparel,Core Basics,core,19.99,Cotton,White,Everyday wear
+SKU-1002,Classic Cotton T-Shirt (L),Apparel,Core Basics,core,19.99,Cotton,White,Everyday wear
+SKU-1003,Denim Jacket,Apparel,Autumn 2026,new,79.00,Denim,Indigo,Young professionals
+SKU-1004,Leather Wallet,Accessories,Core Basics,core,45.00,Leather,Brown,Commuters
+SKU-1005,Canvas Tote Bag,Accessories,Autumn 2026,new,12.50,Canvas,Natural,Students
+SKU-1006,Running Shoes (42),Footwear,Autumn 2026,new,89.90,Mesh,Grey,Casual runners
+SKU-1007,Running Shoes (43),Footwear,Autumn 2026,new,89.90,Mesh,Grey,Casual runners
+SKU-1008,Wool Scarf,Accessories,Autumn 2026,new,24.00,Merino wool,Charcoal,Gift shoppers
+SKU-1009,Stainless Water Bottle,Home,Core Basics,core,18.00,Stainless steel,Silver,Outdoor enthusiasts
+SKU-1010,Yoga Mat,Fitness,Core Basics,core,29.00,TPE foam,Teal,Home fitness
+SKU-1011,Bluetooth Speaker,Electronics,Core Basics,core,59.00,ABS plastic,Black,Music fans
+SKU-1012,Desk Lamp,Home,Core Basics,core,0,Aluminium,White,Remote workers
