@@ -61,3 +61,15 @@ def describe_rows(items: list[str], limit: int = 4) -> str:
 
 def simple_table(title: str, columns: list[str], rows: list[list], note: str = "") -> Table:
     return Table(title=title, columns=columns, rows=rows, note=note)
+
+
+def kv_extractor(keys: list[str], all_keys: list[str]) -> Callable[[str], Optional[str]]:
+    """Extract 'key: value' pairs from free text (value ends at ';', newline or the next 'key:')."""
+    alt = "|".join(re.escape(k) for k in sorted(keys, key=len, reverse=True))
+    nxt = "|".join(re.escape(k) for k in sorted(all_keys, key=len, reverse=True))
+    rx = re.compile(rf"\b(?:{alt})\s*[:=]\s*(.+?)(?=\s*(?:[;\n]|,\s*(?:{nxt})\s*[:=]|$))", re.I)
+
+    def extract(text: str) -> Optional[str]:
+        m = rx.search(text or "")
+        return m.group(1).strip().strip("\"'") if m else None
+    return extract
