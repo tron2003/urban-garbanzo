@@ -1,0 +1,9 @@
+employee_id,name,role,skills,capacity_hours_per_week,current_load_hours,open_tasks,status
+E01,Aarav Mehta,Senior Developer,python:5;django:4;postgresql:4;api design:4,40,34,5,active
+E02,Priya Nair,Frontend Developer,react:5;javascript:5;css:4;typescript:4,40,22,3,active
+E03,Rohan Gupta,Backend Developer,python:4;fastapi:4;docker:3;postgresql:3,40,38,6,active
+E04,Sara Khan,Full Stack Developer,react:4;javascript:4;node:4;postgresql:3,40,30,4,active
+E05,Vikram Singh,DevOps Engineer,docker:5;kubernetes:4;aws:4;python:3,40,16,2,active
+E06,Meera Joshi,QA Engineer,testing:5;selenium:4;javascript:3,40,20,3,active
+E07,Karan Malhotra,Frontend Developer,react:3;css:5;javascript:3,40,10,1,on_leave
+E08,Neha Verma,UI Designer,figma:5;ui design:5,40,12,2,active
