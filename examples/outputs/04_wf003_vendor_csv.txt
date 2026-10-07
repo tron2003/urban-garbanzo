@@ -8,7 +8,7 @@
  Parameters        : vendor_file=data/vendor_file.csv [bundled sample]
 
 Steps executed
-  1. [OK  ] Read file  (1 ms)
+  1. [OK  ] Read file  (2 ms)
         Read 8 data row(s) from vendor_file.csv (bundled sample data); 1 blank row(s) ignored
   2. [OK  ] detect columns  (0 ms)
         Detected 5 known column(s): Item Code -> sku, Product Title -> product_name, Cost Price -> price, Qty Available -> quantity, Brand -> brand
@@ -19,14 +19,14 @@ Steps executed
   5. [OK  ] identify invalid rows  (0 ms)
         Built invalid-row report (2 row(s))
   6. [OK  ] produce cleaned dataset  (1 ms)
-        Wrote examples/outputs/artifacts/20261007-072100-64c029/vendor_cleaned.csv and examples/outputs/artifacts/20261007-072100-64c029/vendor_invalid_rows.csv
+        Wrote examples/outputs/artifacts/20261007-074003-bad6b7/vendor_cleaned.csv and examples/outputs/artifacts/20261007-074003-bad6b7/vendor_invalid_rows.csv
 
 Conditions / decisions   [Excel rule: Rows missing SKU or product name are invalid]
   - required columns present: yes  (required: SKU and product name)
   - row invalid if SKU or product name is missing: 2 invalid of 8
 
 Tools / API calls
-  excel_csv_parser.read x1 (1 ms)
+  excel_csv_parser.read x1 (2 ms)
   data_validation.required_fields x1 (0 ms)
   data_validation.duplicate_keys x1 (0 ms)
   data_validation.numeric_fields x1 (0 ms)
@@ -35,7 +35,7 @@ Warnings
   ! Duplicate SKU(s) kept (not invalid per the rules): V-001 (rows 2, 9)
   ! Non-numeric price in row(s): 8 ('abc') - rows kept, price blanked
 
-Result  [SUCCESS, 2 ms total]
+Result  [SUCCESS, 4 ms total]
   Processed 8 row(s): 6 valid, 2 invalid (1 blank row(s) ignored).
 
   Validation summary
@@ -66,5 +66,5 @@ Result  [SUCCESS, 2 ms total]
   (6 row(s) in total; full file saved)
 
 Files written
-  examples/outputs/artifacts/20261007-072100-64c029/vendor_cleaned.csv
-  examples/outputs/artifacts/20261007-072100-64c029/vendor_invalid_rows.csv
+  examples/outputs/artifacts/20261007-074003-bad6b7/vendor_cleaned.csv
+  examples/outputs/artifacts/20261007-074003-bad6b7/vendor_invalid_rows.csv

@@ -19,7 +19,7 @@ Steps executed
   5. [OK  ] identify invalid rows  (0 ms)
         Built invalid-row report (2 row(s))
   6. [OK  ] produce cleaned dataset  (1 ms)
-        Wrote examples/outputs/artifacts/20261007-072100-630795/vendor_cleaned.csv and examples/outputs/artifacts/20261007-072100-630795/vendor_invalid_rows.csv
+        Wrote examples/outputs/artifacts/20261007-074002-21da95/vendor_cleaned.csv and examples/outputs/artifacts/20261007-074002-21da95/vendor_invalid_rows.csv
 
 Conditions / decisions   [Excel rule: Rows missing SKU or product name are invalid]
   - required columns present: yes  (required: SKU and product name)
@@ -66,5 +66,5 @@ Result  [SUCCESS, 3 ms total]
   (6 row(s) in total; full file saved)
 
 Files written
-  examples/outputs/artifacts/20261007-072100-630795/vendor_cleaned.csv
-  examples/outputs/artifacts/20261007-072100-630795/vendor_invalid_rows.csv
+  examples/outputs/artifacts/20261007-074002-21da95/vendor_cleaned.csv
+  examples/outputs/artifacts/20261007-074002-21da95/vendor_invalid_rows.csv

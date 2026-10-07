@@ -13,7 +13,7 @@
 3. **success** - normalize column names - Normalized to: sku, product_name, price, quantity, brand
 4. **success** - validate required fields - 3 valid, 2 invalid
 5. **success** - identify invalid rows - Built invalid-row report (2 row(s))
-6. **success** - produce cleaned dataset - Wrote examples/outputs/artifacts/20261007-072100-4d4df1/vendor_cleaned.csv and examples/outputs/artifacts/20261007-072100-4d4df1/vendor_invalid_rows.csv
+6. **success** - produce cleaned dataset - Wrote examples/outputs/artifacts/20261007-074003-74817f/vendor_cleaned.csv and examples/outputs/artifacts/20261007-074003-74817f/vendor_invalid_rows.csv
 
 **Conditions / decisions**
 
@@ -22,7 +22,7 @@
 
 **Tools / API calls**
 
-- excel_csv_parser.read x1 (5 ms)
+- excel_csv_parser.read x1 (9 ms)
 - data_validation.required_fields x1 (0 ms)
 - data_validation.duplicate_keys x1 (0 ms)
 - data_validation.numeric_fields x1 (0 ms)
@@ -57,4 +57,4 @@ _Cleaned dataset (preview)_
 | NW-101 | Insulated Mittens | 15.50 | 25 | NordicWear |
 | NW-104 | Hiking Poles |  | 18 | NordicWear |
 
-Files written: `examples/outputs/artifacts/20261007-072100-4d4df1/vendor_cleaned.csv`, `examples/outputs/artifacts/20261007-072100-4d4df1/vendor_invalid_rows.csv`
+Files written: `examples/outputs/artifacts/20261007-074003-74817f/vendor_cleaned.csv`, `examples/outputs/artifacts/20261007-074003-74817f/vendor_invalid_rows.csv`

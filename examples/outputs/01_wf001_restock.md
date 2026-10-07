@@ -12,7 +12,7 @@
 2. **success** - compare current stock with minimum threshold - 6 product(s) below minimum
 3. **success** - identify low-stock products - 6 low-stock product(s), most critical first
 4. **success** - calculate reorder quantity - Reorder quantity computed for 6 product(s)
-5. **success** - generate restock list - Restock list with 6 product(s) saved to examples/outputs/artifacts/20261007-072100-3e9ab1/restock_list.csv
+5. **success** - generate restock list - Restock list with 6 product(s) saved to examples/outputs/artifacts/20261007-074003-faa91c/restock_list.csv
 
 **Conditions / decisions**
 
@@ -44,4 +44,4 @@ _Products requiring restock_
 | SKU-1003 | Denim Jacket | 5 | 10 | 35 | max_stock |
 | SKU-1010 | Yoga Mat | 14 | 15 | 36 | max_stock |
 
-Files written: `examples/outputs/artifacts/20261007-072100-3e9ab1/restock_list.csv`
+Files written: `examples/outputs/artifacts/20261007-074003-faa91c/restock_list.csv`

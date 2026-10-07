@@ -12,7 +12,7 @@
 2. **success** - compare current stock with minimum threshold - 7 product(s) below minimum
 3. **success** - identify low-stock products - 7 low-stock product(s), most critical first
 4. **success** - calculate reorder quantity - Reorder quantity computed for 7 product(s)
-5. **success** - generate restock list - Restock list with 7 product(s) saved to examples/outputs/artifacts/20261007-072100-d3c623/restock_list.csv
+5. **success** - generate restock list - Restock list with 7 product(s) saved to examples/outputs/artifacts/20261007-074003-ed4556/restock_list.csv
 
 **Conditions / decisions**
 
@@ -44,4 +44,4 @@ _Products requiring restock_
 | SKU-1001 | Classic Cotton T-Shirt (M) | 12 | 20 | 88 | max_stock |
 | SKU-1010 | Yoga Mat | 14 | 20 | 36 | max_stock |
 
-Files written: `examples/outputs/artifacts/20261007-072100-d3c623/restock_list.csv`
+Files written: `examples/outputs/artifacts/20261007-074003-ed4556/restock_list.csv`

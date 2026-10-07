@@ -18,8 +18,8 @@ Steps executed
         3 of 4 keyword(s) mapped to a category
   5. [OK  ] identify high-priority keywords  (0 ms)
         1 high-priority keyword(s)
-  6. [OK  ] export results  (0 ms)
-        Exported 4 row(s) to examples/outputs/artifacts/20261007-072101-d9aac2/keyword_report.csv
+  6. [OK  ] export results  (1 ms)
+        Exported 4 row(s) to examples/outputs/artifacts/20261007-074003-a0b100/keyword_report.csv
 
 Conditions / decisions   [Excel rule: Classify each keyword as informational, commercial, transactional, or navigational]
   - duplicate keywords: 0 removed  (compared case-, spacing- and punctuation-insensitively; max volume kept)
@@ -59,4 +59,4 @@ Result  [SUCCESS, 2 ms total]
   nike official site |          | navigational  | Uncategorized | low      | No matching page - review manually
 
 Files written
-  examples/outputs/artifacts/20261007-072101-d9aac2/keyword_report.csv
+  examples/outputs/artifacts/20261007-074003-a0b100/keyword_report.csv

@@ -13,7 +13,7 @@
 3. **success** - normalize column names - Normalized to: sku, product_name, price, quantity, brand
 4. **success** - validate required fields - 6 valid, 2 invalid
 5. **success** - identify invalid rows - Built invalid-row report (2 row(s))
-6. **success** - produce cleaned dataset - Wrote examples/outputs/artifacts/20261007-072100-64c029/vendor_cleaned.csv and examples/outputs/artifacts/20261007-072100-64c029/vendor_invalid_rows.csv
+6. **success** - produce cleaned dataset - Wrote examples/outputs/artifacts/20261007-074003-bad6b7/vendor_cleaned.csv and examples/outputs/artifacts/20261007-074003-bad6b7/vendor_invalid_rows.csv
 
 **Conditions / decisions**
 
@@ -22,7 +22,7 @@
 
 **Tools / API calls**
 
-- excel_csv_parser.read x1 (1 ms)
+- excel_csv_parser.read x1 (2 ms)
 - data_validation.required_fields x1 (0 ms)
 - data_validation.duplicate_keys x1 (0 ms)
 - data_validation.numeric_fields x1 (0 ms)
@@ -65,4 +65,4 @@ _Cleaned dataset (preview)_
 | V-001 | Wool Beanie (duplicate listing) | 12.50 | 100 | NordicWear |
 | V-009 | Trail Gaiters | 8.40 | 15 | NordicWear |
 
-Files written: `examples/outputs/artifacts/20261007-072100-64c029/vendor_cleaned.csv`, `examples/outputs/artifacts/20261007-072100-64c029/vendor_invalid_rows.csv`
+Files written: `examples/outputs/artifacts/20261007-074003-bad6b7/vendor_cleaned.csv`, `examples/outputs/artifacts/20261007-074003-bad6b7/vendor_invalid_rows.csv`

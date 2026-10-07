@@ -27,7 +27,7 @@
 - calculator.rate x11 (0 ms)
 - calculator.mean x10 (0 ms)
 - reporting.top_counts x1 (0 ms)
-- reporting.group_stats x1 (2 ms)
+- reporting.group_stats x1 (1 ms)
 
 **Result (success)**
 
@@ -83,4 +83,4 @@ _Slow steps (avg > 2,000 ms)_
 6. [Speed] WF008 SEO Keyword Classification: step 'classify search intent' averages 2,334 ms (p95 3,104) - reduce LLM latency: shorter prompts, a smaller/faster model, cache repeated prompts, or run independent generation steps concurrently
 ```
 
-Files written: `examples/outputs/artifacts/20261007-072101-ac0950/performance_report.csv`
+Files written: `examples/outputs/artifacts/20261007-074003-2eaac7/performance_report.csv`

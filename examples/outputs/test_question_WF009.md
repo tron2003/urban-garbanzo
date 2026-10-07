@@ -25,7 +25,7 @@
 
 **Tools / API calls**
 
-- employee_task_db.employees x1 (1 ms)
+- employee_task_db.employees x1 (2 ms)
 - ranking_logic.rank x1 (0 ms)
 
 **Warnings**

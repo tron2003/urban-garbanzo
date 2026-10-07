@@ -8,18 +8,18 @@
  Parameters        : keywords_file=data/keywords.csv [bundled sample]; categories_file=data/categories.csv [bundled sample]
 
 Steps executed
-  1. [OK  ] Read keywords  (2 ms)
+  1. [OK  ] Read keywords  (1 ms)
         Read 23 keyword(s) keywords.csv (bundled sample data)
   2. [OK  ] remove duplicates  (0 ms)
         22 unique keyword(s); 1 duplicate(s) removed
   3. [OK  ] classify search intent  (0 ms)
         5 transactional, 11 commercial, 5 informational, 1 navigational
-  4. [OK  ] map keywords to categories  (2 ms)
+  4. [OK  ] map keywords to categories  (1 ms)
         21 of 22 keyword(s) mapped to a category
   5. [OK  ] identify high-priority keywords  (0 ms)
         12 high-priority keyword(s)
   6. [OK  ] export results  (1 ms)
-        Exported 22 row(s) to examples/outputs/artifacts/20261007-072101-a498d4/keyword_report.csv
+        Exported 22 row(s) to examples/outputs/artifacts/20261007-074003-c5a622/keyword_report.csv
 
 Conditions / decisions   [Excel rule: Classify each keyword as informational, commercial, transactional, or navigational]
   - duplicate keywords: 1 removed  (compared case-, spacing- and punctuation-insensitively; max volume kept)
@@ -34,7 +34,7 @@ Tools / API calls
 Warnings
   ! 7 keyword(s) have a low-confidence intent label (bare product phrases default to 'commercial'). Configure an LLM to refine them.
 
-Result  [SUCCESS, 4 ms total]
+Result  [SUCCESS, 3 ms total]
   Classified 22 unique keyword(s): 5 transactional, 11 commercial, 5 informational, 1 navigational; 12 high priority.
 
   Intent breakdown
@@ -88,4 +88,4 @@ Result  [SUCCESS, 4 ms total]
   what is a tpe yoga mat               | 260      | informational | Fitness       | low      | /blog/what-is-a-tpe-yoga-mat (new guide, link…
 
 Files written
-  examples/outputs/artifacts/20261007-072101-a498d4/keyword_report.csv
+  examples/outputs/artifacts/20261007-074003-c5a622/keyword_report.csv

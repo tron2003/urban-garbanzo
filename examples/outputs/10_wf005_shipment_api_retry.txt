@@ -27,7 +27,7 @@ Tools / API calls
   order_api.search x1 (0 ms)
   shipment_lookup x1 (200 ms) - succeeded after retry (2 attempts)
 
-Result  [SUCCESS, 200 ms total]
+Result  [SUCCESS, 201 ms total]
   ORD-1004 is shipped - out for delivery via UPS (tracking UPS-1Z999AA10123456784), ETA 2026-10-07.
 
   Order status & shipment

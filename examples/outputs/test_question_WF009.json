@@ -24,11 +24,11 @@
     ]
   },
   "run": {
-    "run_id": "20261007-072100-d15ad5",
+    "run_id": "20261007-074003-aefc7b",
     "workflow_id": "WF009",
     "workflow_name": "Employee Task Assignment",
     "status": "success",
-    "duration_ms": 4.0,
+    "duration_ms": 6.8,
     "parameters": {
       "role": "developer",
       "priority": "high",
@@ -46,7 +46,7 @@
         "index": 1,
         "name": "Understand task requirements",
         "status": "success",
-        "duration_ms": 3.8,
+        "duration_ms": 6.5,
         "detail": "Skills: javascript, react; priority high; deadline none; 8h (bundled sample task)",
         "error": ""
       },
@@ -130,7 +130,7 @@
         "step": "Understand task requirements",
         "status": "ok",
         "attempts": 1,
-        "duration_ms": 1.0,
+        "duration_ms": 1.7,
         "error": ""
       },
       {
@@ -139,7 +139,7 @@
         "step": "rank candidates",
         "status": "ok",
         "attempts": 1,
-        "duration_ms": 0.1,
+        "duration_ms": 0.0,
         "error": ""
       }
     ],

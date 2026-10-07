@@ -8,7 +8,7 @@
  Parameters        : role=developer; priority=high; task_description=Fix the checkout page bug in the React storefront: the pay … [bundled sample]; employees_file=data/employees.csv [bundled sample]
 
 Steps executed
-  1. [OK  ] Understand task requirements  (4 ms)
+  1. [OK  ] Understand task requirements  (7 ms)
         Skills: javascript, react; priority high; deadline none; 8h (bundled sample task)
   2. [OK  ] compare employee skills  (0 ms)
         3 employee(s) cover all required skills
@@ -29,13 +29,13 @@ Conditions / decisions   [Excel rule: Prefer employees with required skills and 
   - assignee: Priya Nair (Frontend Developer)  (score 0.72)
 
 Tools / API calls
-  employee_task_db.employees x1 (1 ms)
+  employee_task_db.employees x1 (2 ms)
   ranking_logic.rank x1 (0 ms)
 
 Warnings
   ! No effort estimate given - assumed 8 hours (one working day).
 
-Result  [SUCCESS, 4 ms total]
+Result  [SUCCESS, 7 ms total]
   Assign to Priya Nair (Frontend Developer). Priority high, deadline none set.
 
   Recommended assignment

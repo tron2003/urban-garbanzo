@@ -8,7 +8,7 @@
  Parameters        : threshold_pct=10.0; product_file=data/products.csv [bundled sample]; vendor_file=data/vendor_prices.csv [bundled sample]
 
 Steps executed
-  1. [OK  ] Load product prices  (2 ms)
+  1. [OK  ] Load product prices  (3 ms)
         Loaded 12 internal and 12 vendor price rows
   2. [OK  ] match products by SKU  (0 ms)
         11 SKU(s) matched
@@ -16,7 +16,7 @@ Steps executed
         9 comparable pair(s); 2 skipped
   4. [OK  ] calculate percentage difference  (0 ms)
         Percentage differences calculated (base = internal price)
-  5. [OK  ] flag exceptions  (0 ms)
+  5. [OK  ] flag exceptions  (1 ms)
         3 exception(s) flagged
 
 Conditions / decisions   [Excel rule: Flag when price difference exceeds 10%]
@@ -25,13 +25,13 @@ Conditions / decisions   [Excel rule: Flag when price difference exceeds 10%]
   - difference exactly at threshold: not flagged  (SKU-1003)
 
 Tools / API calls
-  csv_reader.read x2 (1 ms)
+  csv_reader.read x2 (3 ms)
   calculator.percent_difference x1 (0 ms)
 
 Warnings
   ! Could not compare: SKU-1011 (vendor price 'N/A' not a valid price); SKU-1012 (internal price 0 must be greater than zero to compute a percentage)
 
-Result  [SUCCESS, 2 ms total]
+Result  [SUCCESS, 4 ms total]
   3 of 9 matched products differ from the vendor price by more than 10.0%.
 
   Exceptions (difference > 10.0%)
@@ -61,4 +61,4 @@ Result  [SUCCESS, 2 ms total]
   SKU-9999 | in vendor list only (unknown product)
 
 Files written
-  examples/outputs/artifacts/20261007-072100-b14d95/price_validation_report.csv
+  examples/outputs/artifacts/20261007-074003-4192d9/price_validation_report.csv

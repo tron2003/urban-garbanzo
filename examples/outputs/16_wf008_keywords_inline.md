@@ -13,7 +13,7 @@
 3. **success** - classify search intent - 1 transactional, 1 commercial, 1 informational, 1 navigational
 4. **success** - map keywords to categories - 3 of 4 keyword(s) mapped to a category
 5. **success** - identify high-priority keywords - 1 high-priority keyword(s)
-6. **success** - export results - Exported 4 row(s) to examples/outputs/artifacts/20261007-072101-d9aac2/keyword_report.csv
+6. **success** - export results - Exported 4 row(s) to examples/outputs/artifacts/20261007-074003-a0b100/keyword_report.csv
 
 **Conditions / decisions**
 
@@ -59,4 +59,4 @@ _Keyword report_
 | how to wash denim |  | informational | Apparel | low | /blog/how-to-wash-denim (new guide, link to /collections/apparel) |
 | nike official site |  | navigational | Uncategorized | low | No matching page - review manually |
 
-Files written: `examples/outputs/artifacts/20261007-072101-d9aac2/keyword_report.csv`
+Files written: `examples/outputs/artifacts/20261007-074003-a0b100/keyword_report.csv`

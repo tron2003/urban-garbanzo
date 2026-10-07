@@ -8,7 +8,7 @@
  Parameters        : inventory_file=data/inventory.csv [bundled sample]
 
 Steps executed
-  1. [OK  ] Load inventory  (1 ms)
+  1. [OK  ] Load inventory  (2 ms)
         Loaded 12 rows from inventory.csv (bundled sample data); 2 invalid
   2. [OK  ] compare current stock with minimum threshold  (0 ms)
         6 product(s) below minimum
@@ -16,8 +16,8 @@ Steps executed
         6 low-stock product(s), most critical first
   4. [OK  ] calculate reorder quantity  (0 ms)
         Reorder quantity computed for 6 product(s)
-  5. [OK  ] generate restock list  (0 ms)
-        Restock list with 6 product(s) saved to examples/outputs/artifacts/20261007-072100-3e9ab1/restock_list.csv
+  5. [OK  ] generate restock list  (1 ms)
+        Restock list with 6 product(s) saved to examples/outputs/artifacts/20261007-074003-faa91c/restock_list.csv
 
 Conditions / decisions   [Excel rule: If current_stock < minimum_stock, mark product for restock]
   - current_stock < minimum_stock: 6 of 10 products below minimum  (strictly less-than; basis: per-product minimum_stock)
@@ -31,7 +31,7 @@ Tools / API calls
 Warnings
   ! 2 inventory row(s) skipped: SKU-1011 (current_stock 'abc' is not a number), SKU-1012 (minimum_stock is missing)
 
-Result  [SUCCESS, 1 ms total]
+Result  [SUCCESS, 2 ms total]
   6 of 10 products need restocking (312 units to order in total).
 
   Products requiring restock
@@ -45,4 +45,4 @@ Result  [SUCCESS, 1 ms total]
   SKU-1010 | Yoga Mat                   | 14            | 15      | 36                    | max_stock
 
 Files written
-  examples/outputs/artifacts/20261007-072100-3e9ab1/restock_list.csv
+  examples/outputs/artifacts/20261007-074003-faa91c/restock_list.csv

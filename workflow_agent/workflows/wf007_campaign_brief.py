@@ -340,7 +340,7 @@ def checklist(ctx):
                 Table("Products", ["SKU", "Name", "Category", "Price"], [[p["sku"], p["name"], p.get("category", ""), p.get("price", "")] for p in s["prods"]]),
                 Table("Channel recommendations", ["Channel", "Role", "Why", "KPI"], [list(c) for c in s["channels"]]),
                 Table("Timeline", ["Phase", "From", "To", "Focus"], [[n, a.isoformat(), b.isoformat(), d] for n, a, b, d in phases]),
-                Table("Checklist", ["Due", "", "Task"], rows)],
+                Table("Checklist", ["Due", "Status", "Task"], rows)],
         text_blocks=[("Messaging", f"Headline: {m['headline']}\nTagline: {m['tagline']}\n" + "\n".join(f"- {x}" for x in m["key_messages"]) + f"\nCTA: {m['call_to_action']}")]
                     + ([("Assumptions", "\n".join(f"- {a}" for a in assumptions))] if assumptions else []),
         data={"objective": s["obj_label"], "goal": s["goal"], "start": start.isoformat(), "end": end.isoformat(),

@@ -12,11 +12,11 @@ Steps executed
         Loaded 982 log row(s) from execution_logs.csv (bundled sample data)
   2. [OK  ] calculate success/failure rate  (1 ms)
         179 runs across 10 workflows; overall failure rate 8.98%
-  3. [OK  ] calculate average execution time  (1 ms)
+  3. [OK  ] calculate average execution time  (0 ms)
         Average run time computed for 10 workflow(s)
   4. [OK  ] identify frequent errors  (0 ms)
         15 failed step(s); 8 distinct frequent error(s)
-  5. [OK  ] identify slow steps  (2 ms)
+  5. [OK  ] identify slow steps  (1 ms)
         6 step(s) above 2000 ms
   6. [OK  ] generate recommendations  (1 ms)
         6 recommendation(s)
@@ -31,9 +31,9 @@ Tools / API calls
   calculator.rate x11 (0 ms)
   calculator.mean x10 (0 ms)
   reporting.top_counts x1 (0 ms)
-  reporting.group_stats x1 (2 ms)
+  reporting.group_stats x1 (1 ms)
 
-Result  [SUCCESS, 23 ms total]
+Result  [SUCCESS, 22 ms total]
   3 of 10 workflows exceed the 10% failure-rate threshold; failing most often: WF003 (18.18%), WF004 (17.65%), WF005 (16.00%). 1 workflow(s) exceed the average-time threshold.
 
   Workflow metrics (worst failure rate first)
@@ -81,4 +81,4 @@ Result  [SUCCESS, 23 ms total]
     6. [Speed] WF008 SEO Keyword Classification: step 'classify search intent' averages 2,334 ms (p95 3,104) - reduce LLM latency: shorter prompts, a smaller/faster model, cache repeated prompts, or run independent generation steps concurrently
 
 Files written
-  examples/outputs/artifacts/20261007-072101-ac0950/performance_report.csv
+  examples/outputs/artifacts/20261007-074003-2eaac7/performance_report.csv

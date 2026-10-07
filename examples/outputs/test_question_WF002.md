@@ -22,7 +22,7 @@
 
 **Tools / API calls**
 
-- csv_reader.read x2 (2 ms)
+- csv_reader.read x2 (3 ms)
 - calculator.percent_difference x1 (0 ms)
 
 **Warnings**
@@ -62,4 +62,4 @@ _Unmatched SKUs_
 | SKU-1009 | in product file only (no vendor price) |
 | SKU-9999 | in vendor list only (unknown product) |
 
-Files written: `examples/outputs/artifacts/20261007-072100-c3df80/price_validation_report.csv`
+Files written: `examples/outputs/artifacts/20261007-074002-bf0aa5/price_validation_report.csv`

@@ -17,7 +17,7 @@ Steps executed
   4. [OK  ] calculate reorder quantity  (0 ms)
         Reorder quantity computed for 7 product(s)
   5. [OK  ] generate restock list  (0 ms)
-        Restock list with 7 product(s) saved to examples/outputs/artifacts/20261007-072100-d3c623/restock_list.csv
+        Restock list with 7 product(s) saved to examples/outputs/artifacts/20261007-074003-ed4556/restock_list.csv
 
 Conditions / decisions   [Excel rule: If current_stock < minimum_stock, mark product for restock]
   - current_stock < minimum_stock: 7 of 11 products below minimum  (strictly less-than; basis: global threshold 20)
@@ -30,7 +30,7 @@ Tools / API calls
 Warnings
   ! 1 inventory row(s) skipped: SKU-1011 (current_stock 'abc' is not a number)
 
-Result  [SUCCESS, 1 ms total]
+Result  [SUCCESS, 2 ms total]
   7 of 11 products need restocking (349 units to order in total).
 
   Products requiring restock
@@ -45,4 +45,4 @@ Result  [SUCCESS, 1 ms total]
   SKU-1010 | Yoga Mat                   | 14            | 20      | 36                    | max_stock
 
 Files written
-  examples/outputs/artifacts/20261007-072100-d3c623/restock_list.csv
+  examples/outputs/artifacts/20261007-074003-ed4556/restock_list.csv

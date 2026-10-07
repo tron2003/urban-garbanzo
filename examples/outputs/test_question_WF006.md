@@ -23,10 +23,10 @@
 
 **Tools / API calls**
 
-- csv_database_reader.read x1 (1 ms)
+- csv_database_reader.read x1 (2 ms)
 - text_similarity.normalize x1 (0 ms)
 - text_similarity.candidate_pairs x1 (0 ms)
-- text_similarity.score_pairs x1 (7 ms)
+- text_similarity.score_pairs x1 (12 ms)
 
 **Result (success)**
 
@@ -68,4 +68,4 @@ _Kept apart as variants (not duplicates)_
 | Brown Leather Wallet | Black Leather Wallet | color |
 | Bluetooth Speaker Mini | Bluetooth Speaker Mini | brand |
 
-Files written: `examples/outputs/artifacts/20261007-072100-476487/duplicate_groups.csv`
+Files written: `examples/outputs/artifacts/20261007-074002-bb0711/duplicate_groups.csv`

@@ -8,17 +8,17 @@
  Parameters        : catalog_file=data/catalog.csv [bundled sample]
 
 Steps executed
-  1. [OK  ] Load products  (1 ms)
+  1. [OK  ] Load products  (2 ms)
         Loaded 17 products from catalog.csv (bundled sample data)
   2. [OK  ] normalize names/SKUs  (0 ms)
         Normalized 17 names into tokens and SKUs into comparable keys
   3. [OK  ] compare identifiers  (0 ms)
         2 definite pair(s) from SKU comparison
-  4. [OK  ] compare product attributes  (7 ms)
+  4. [OK  ] compare product attributes  (13 ms)
         Scored 134 candidate pair(s): 3 possible, 6 variant(s) excluded
   5. [OK  ] group likely duplicates  (0 ms)
         5 duplicate group(s) covering 10 records
-  6. [OK  ] assign confidence  (0 ms)
+  6. [OK  ] assign confidence  (1 ms)
         5 group(s) with confidence assigned
 
 Conditions / decisions   [Excel rule: Exact SKU match is a definite duplicate; high attribute similarity is a possible duplicate]
@@ -27,12 +27,12 @@ Conditions / decisions   [Excel rule: Exact SKU match is a definite duplicate; h
   - similar names but conflicting attributes: 6 pair(s) kept apart as variants  (e.g. Cotton T-Shirt Red M vs Cotton T-Shirt Blue M (color); Cotton T-Shirt Red M vs Cotton T-Shirt Red L (size))
 
 Tools / API calls
-  csv_database_reader.read x1 (1 ms)
+  csv_database_reader.read x1 (2 ms)
   text_similarity.normalize x1 (0 ms)
   text_similarity.candidate_pairs x1 (0 ms)
-  text_similarity.score_pairs x1 (7 ms)
+  text_similarity.score_pairs x1 (12 ms)
 
-Result  [SUCCESS, 9 ms total]
+Result  [SUCCESS, 16 ms total]
   Found 5 duplicate group(s) in 17 products: 2 definite, 3 possible.
 
   Duplicate groups
@@ -69,4 +69,4 @@ Result  [SUCCESS, 9 ms total]
   Bluetooth Speaker Mini | Bluetooth Speaker Mini | brand
 
 Files written
-  examples/outputs/artifacts/20261007-072100-476487/duplicate_groups.csv
+  examples/outputs/artifacts/20261007-074002-bb0711/duplicate_groups.csv

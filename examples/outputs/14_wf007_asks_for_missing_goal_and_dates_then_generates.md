@@ -44,7 +44,7 @@ The agent asks: *Before I write the brief I need: campaign goal and campaign dat
 3. **success** - summarize products - 5 product(s) selected (launch_status = new) across 3 categories
 4. **success** - create messaging - Headline: 'Autumn 2026: made to be bought' via template (no LLM configured)
 5. **success** - create channel recommendations - 6 channel(s) recommended for 'Sales & conversion'
-6. **success** - create campaign checklist - 15 checklist items; brief saved to examples/outputs/artifacts/20261007-072101-f7f612/campaign_brief.md
+6. **success** - create campaign checklist - 15 checklist items; brief saved to examples/outputs/artifacts/20261007-074003-c5e540/campaign_brief.md
 
 **Conditions / decisions**
 
@@ -54,7 +54,7 @@ The agent asks: *Before I write the brief I need: campaign goal and campaign dat
 
 **Tools / API calls**
 
-- product_data_reader.select x1 (2 ms)
+- product_data_reader.select x1 (1 ms)
 
 **Result (success)**
 
@@ -104,7 +104,7 @@ _Timeline_
 
 _Checklist_
 
-| Due |  | Task |
+| Due | Status | Task |
 |---|---|---|
 | 2026-10-18 |  | Confirm objective, KPIs and budget with stakeholders |
 | 2026-10-22 |  | Approve creative assets and copy (headline, key messages, CTA) |
@@ -135,4 +135,4 @@ Tagline: Sales & conversion campaign, 01 Nov - 30 Nov 2026
 CTA: Shop now
 ```
 
-Files written: `examples/outputs/artifacts/20261007-072101-f7f612/campaign_brief.md`
+Files written: `examples/outputs/artifacts/20261007-074003-c5e540/campaign_brief.md`

@@ -13,7 +13,7 @@
 3. **success** - classify search intent - 5 transactional, 11 commercial, 5 informational, 1 navigational
 4. **success** - map keywords to categories - 21 of 22 keyword(s) mapped to a category
 5. **success** - identify high-priority keywords - 12 high-priority keyword(s)
-6. **success** - export results - Exported 22 row(s) to examples/outputs/artifacts/20261007-072100-536a6f/keyword_report.csv
+6. **success** - export results - Exported 22 row(s) to examples/outputs/artifacts/20261007-074002-b966f2/keyword_report.csv
 
 **Conditions / decisions**
 
@@ -24,7 +24,7 @@
 
 **Tools / API calls**
 
-- csv_reader.read x2 (1 ms)
+- csv_reader.read x2 (2 ms)
 - llm_classifier.classify_intent x1 (0 ms)
 
 **Warnings**
@@ -88,4 +88,4 @@ _Keyword report_
 | astrology compatibility | 150 | commercial | Uncategorized | low | No matching page - review manually |
 | what is a tpe yoga mat | 260 | informational | Fitness | low | /blog/what-is-a-tpe-yoga-mat (new guide, link to /collections/fitness) |
 
-Files written: `examples/outputs/artifacts/20261007-072100-536a6f/keyword_report.csv`
+Files written: `examples/outputs/artifacts/20261007-074002-b966f2/keyword_report.csv`
