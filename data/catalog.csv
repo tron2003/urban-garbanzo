@@ -1,0 +1,18 @@
+sku,product_name,brand,category,color,size,material,price
+CAT-001,Apple iPhone 13 128GB Black,Apple,Smartphones,Black,128GB,,699
+CAT-002,iPhone 13 (128 GB) - Black,Apple,Smartphones,Black,128GB,,699
+CAT-003,Samsung Galaxy S22 256GB,Samsung,Smartphones,Phantom Black,256GB,,799
+CAT-003,Galaxy S22 256 GB (Samsung),Samsung,Smartphones,Phantom Black,256GB,,799
+CAT-004,Cotton T-Shirt Red M,BasicCo,Apparel,Red,M,Cotton,15
+cat 004,Basic Cotton Tee Red (M),BasicCo,Apparel,Red,M,Cotton,15
+CAT-005,Cotton T-Shirt Blue M,BasicCo,Apparel,Blue,M,Cotton,15
+CAT-006,Cotton T-Shirt Red L,BasicCo,Apparel,Red,L,Cotton,15
+CAT-010,Leather Wallet Brown,Heritage,Accessories,Brown,,Leather,45
+CAT-011,Brown Leather Wallet,Heritage,Accessories,Brown,,Leather,45
+CAT-012,Black Leather Wallet,Heritage,Accessories,Black,,Leather,45
+CAT-020,Stainless Steel Water Bottle 750ml,Aqua,Home,Silver,750ml,Stainless steel,18
+CAT-021,Aqua Stainless Water Bottle 750 ml,Aqua,Home,Silver,750ml,Stainless steel,18
+CAT-030,Yoga Mat TPE 6mm,FlexFit,Fitness,Teal,6mm,TPE,29
+CAT-031,LED Desk Lamp Adjustable,BrightHome,Home,White,,Aluminium,34
+CAT-032,Bluetooth Speaker Mini,SoundHub,Electronics,Black,,ABS plastic,59
+CAT-034,Bluetooth Speaker Mini,AudioMax,Electronics,Black,,ABS plastic,55
