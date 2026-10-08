@@ -198,3 +198,89 @@ def test_provider_auto_detection(monkeypatch, tmp_path):
     assert Settings.from_env(tmp_path).llm_provider == "openai"
     monkeypatch.setenv("LLM_BASE_URL", "http://x/v1")
     assert Settings.from_env(tmp_path).llm_provider == "openai_compatible"
+
+
+# ---------------- regression: found by a live OpenRouter run ----------------
+def test_model_refusing_because_an_input_is_missing_is_overridden_by_a_strong_match(server, tmp_path):
+    """A real model answered 'no_matching_workflow: I need the inventory file path'. Missing inputs are not a reason to refuse."""
+    srv = server([{"tool": "no_matching_workflow", "args": {"reason": "I need the inventory CSV file path first"}}])
+    r = agent_for(srv, tmp_path).handle("Which products need restocking?")
+    assert r.kind == "completed" and r.report.workflow_id == "WF001"
+    assert r.route.method == "heuristic (LLM said no match)" and "inventory CSV file path" in r.route.note
+
+
+def test_genuinely_unrelated_requests_stay_unmatched_even_with_the_override(server, tmp_path):
+    srv = server([{"tool": "no_matching_workflow", "args": {"reason": "weather question"}}])
+    assert agent_for(srv, tmp_path).handle("what's the weather like in Paris").kind == "no_match"
+
+
+def test_router_prompt_tells_the_model_that_missing_inputs_are_fine(server, tmp_path):
+    srv = server([{"tool": "wf001_inventory_restock_check", "args": {}}])
+    agent_for(srv, tmp_path).handle("Which products need restocking?")
+    system = srv.requests[0]["messages"][0]["content"]
+    assert "NEVER a reason to refuse" in system and "ONLY when the request is unrelated" in system
+
+
+# ---------------- regression: reasoning models (found with apodex/apodex-1.1-mini:free) ----------------
+def test_openrouter_disables_reasoning_by_default_and_other_providers_are_untouched(tmp_path):
+    from workflow_agent.llm import build_llm
+    s = make_settings(tmp_path, llm_provider="openrouter", llm_api_key="k")
+    assert build_llm(s).extra_body == {"reasoning": {"enabled": False}}
+    s.llm_reasoning = "default"
+    assert build_llm(s).extra_body == {}
+    assert build_llm(make_settings(tmp_path, llm_provider="openai", llm_api_key="k")).extra_body == {}
+    assert build_llm(make_settings(tmp_path, llm_provider="vllm", llm_model="m")).extra_body == {}
+
+
+def test_reasoning_flag_is_sent_on_the_wire_for_openrouter(server, tmp_path):
+    srv = server([{"content": "ok"}])
+    OpenAICompatibleClient(srv.url, "k", "m", 5, "openrouter", {}, {"reasoning": {"enabled": False}}).chat([{"role": "user", "content": "x"}], max_tokens=50)
+    assert srv.requests[0]["reasoning"] == {"enabled": False} and srv.requests[0]["max_tokens"] == 50
+
+
+def test_model_that_burns_its_budget_on_reasoning_gives_a_precise_error_and_workflows_fall_back(server, tmp_path):
+    import json
+    thinking = json.dumps({"choices": [{"finish_reason": "length", "message": {"content": "", "reasoning": "hmm " * 50}}]})
+    srv = server([{"raw": thinking}])
+    with pytest.raises(LLMUnavailable, match="hidden reasoning"):
+        OpenAICompatibleClient(srv.url, "k", "m", 5).chat([{"role": "user", "content": "x"}])
+    srv2 = server([{"tool": "wf004_product_description_generator", "args": {}}] + [{"raw": thinking}] * 4)
+    r = agent_for(srv2, tmp_path).handle("Generate SEO content for this product.")
+    assert r.kind == "completed" and all(m.startswith("template") for m in r.report.result.data["generation_modes"].values())
+    assert any("hidden reasoning" in w for w in r.report.warnings)
+
+
+# ---------------- regression: models invent arguments (live run: inventory_file='inventory.csv') ----------------
+def test_invented_file_name_from_the_model_is_dropped_and_the_sample_is_used(server, tmp_path):
+    srv = server([{"tool": "wf001_inventory_restock_check", "args": {"inventory_file": "inventory.csv"}}])
+    r = agent_for(srv, tmp_path).handle("Which products need restocking?")
+    assert r.kind == "completed"
+    assert r.report.param_sources["inventory_file"] == "sample" and r.report.params["inventory_file"] == "data/inventory.csv"
+    assert "inventory_file='inventory.csv'" in r.route.note
+
+
+def test_grounded_model_arguments_are_kept(server, tmp_path):
+    # file named in the request, existing file, id normalised from digits, number present in the text
+    cases = [("restock using data/inventory.csv please", {"inventory_file": "data/inventory.csv"}, "inventory_file"),
+             ("restock please", {"inventory_file": "data/inventory.csv"}, "inventory_file"),
+             ("products below 15 units", {"threshold": 15}, "threshold")]
+    for text, args, key in cases:
+        srv = server([{"tool": "wf001_inventory_restock_check", "args": args}])
+        r = agent_for(srv, tmp_path).handle(text)
+        assert r.report.param_sources.get(key) == "user", (text, r.route.note)
+    srv = server([{"tool": "wf005_customer_order_status", "args": {"order_id": "ORD-1003"}}])
+    assert agent_for(srv, tmp_path).handle("check 1003 for me").report.params["order_id"] == "ORD-1003"
+
+
+def test_invented_order_id_and_number_are_dropped(server, tmp_path):
+    srv = server([{"tool": "wf005_customer_order_status", "args": {"order_id": "ORD-1003"}}])
+    r = agent_for(srv, tmp_path).handle("where is my order")                      # no id anywhere in the request
+    assert r.kind == "needs_input" and "order_id" not in r.report.params
+    srv = server([{"tool": "wf001_inventory_restock_check", "args": {"threshold": 50}}])
+    assert "threshold" not in agent_for(srv, tmp_path).handle("what needs restocking").report.params
+
+
+def test_array_arguments_keep_only_grounded_items(server, tmp_path):
+    srv = server([{"tool": "wf008_seo_keyword_classification", "args": {"keywords": ["buy yoga mat", "invented keyword", "cheap yoga mat"]}}])
+    r = agent_for(srv, tmp_path).handle("classify these keywords: buy yoga mat, cheap yoga mat")
+    assert r.report.params["keywords"] == ["buy yoga mat", "cheap yoga mat"]
