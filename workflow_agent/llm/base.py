@@ -51,8 +51,9 @@ class OpenAICompatibleClient(LLMClient):
     available = True
 
     def __init__(self, base_url: str, api_key: str, model: str, timeout: float = 60.0, label: str = "openai_compatible",
-                 extra_headers: Optional[dict] = None):
+                 extra_headers: Optional[dict] = None, extra_body: Optional[dict] = None):
         self.extra_headers = dict(extra_headers or {})
+        self.extra_body = dict(extra_body or {})
         self.base_url = base_url.rstrip("/")
         self.api_key = api_key
         self.model = model
@@ -69,6 +70,7 @@ class OpenAICompatibleClient(LLMClient):
             payload["response_format"] = {"type": "json_object"}
         if max_tokens:
             payload["max_tokens"] = max_tokens
+        payload.update(self.extra_body)
         headers = {"Content-Type": "application/json", **self.extra_headers}
         if self.api_key:
             headers["Authorization"] = f"Bearer {self.api_key}"
@@ -91,9 +93,13 @@ class OpenAICompatibleClient(LLMClient):
             raise LLMUnavailable("LLM returned a non-JSON response") from exc
 
         try:
-            msg = body["choices"][0]["message"]
+            choice = body["choices"][0]
+            msg = choice["message"]
         except (KeyError, IndexError, TypeError) as exc:
             raise LLMUnavailable("LLM response had no choices/message") from exc
+        if not (msg.get("content") or "").strip() and not msg.get("tool_calls") and choice.get("finish_reason") == "length":
+            raise LLMUnavailable("model used its whole token budget on hidden reasoning and returned no answer "
+                                 "(use a non-reasoning model, or keep LLM_REASONING=off for OpenRouter)")
         calls: list[LLMToolCall] = []
         for tc in msg.get("tool_calls") or []:
             fn = tc.get("function", {})
@@ -143,9 +149,11 @@ def build_llm(settings) -> LLMClient:
         model = _discover_model(base, settings.llm_api_key)
     if not model:
         return OfflineLLM()
-    headers = {}
+    headers, body = {}, {}
+    if provider == "openrouter" and (getattr(settings, "llm_reasoning", "off") or "off").lower() != "default":
+        body["reasoning"] = {"enabled": False}     # reasoning models otherwise spend max_tokens thinking and return ""
     if provider == "openrouter":               # optional attribution headers recommended by OpenRouter
         headers["X-Title"] = os.environ.get("OPENROUTER_APP_TITLE", "workflow-agent")
         if os.environ.get("OPENROUTER_REFERER"):
             headers["HTTP-Referer"] = os.environ["OPENROUTER_REFERER"]
-    return OpenAICompatibleClient(base, settings.llm_api_key, model, settings.llm_timeout, provider, headers)
+    return OpenAICompatibleClient(base, settings.llm_api_key, model, settings.llm_timeout, provider, headers, body)
