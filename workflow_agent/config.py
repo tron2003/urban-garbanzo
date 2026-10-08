@@ -51,6 +51,7 @@ class Settings:
     llm_api_key: str = ""
     llm_model: str = ""
     llm_timeout: float = 60.0
+    llm_reasoning: str = "off"          # OpenRouter: off = ask the model not to think (default) | default = provider default
 
     # Behaviour
     allow_sample_defaults: bool = True
@@ -58,6 +59,7 @@ class Settings:
     tool_retry_backoff_s: float = 0.2
     router_min_score: float = 0.10
     router_ambiguity_margin: float = 0.12
+    router_override_score: float = 0.35      # heuristic score that overrides an LLM 'no matching workflow'
     today: Optional[date] = None        # injectable for deterministic tests
 
     # Business thresholds (the Excel Decision_Logic text states the defaults)
@@ -108,6 +110,7 @@ class Settings:
             llm_api_key=api_key,
             llm_model=env("LLM_MODEL") or "",
             llm_timeout=_float(env("LLM_TIMEOUT_SECONDS"), 60.0),
+            llm_reasoning=(env("LLM_REASONING") or "off").strip().lower(),
             allow_sample_defaults=_bool(env("ALLOW_SAMPLE_DEFAULTS"), True),
             price_diff_threshold_pct=_float(env("PRICE_DIFF_THRESHOLD_PCT"), 10.0),
             failure_rate_threshold_pct=_float(env("FAILURE_RATE_THRESHOLD_PCT"), 10.0),
