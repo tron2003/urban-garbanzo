@@ -53,7 +53,7 @@ python -m workflow_agent                                        # interactive ch
 python -m workflow_agent --list                                 # workflows as read from the Excel file
 python -m workflow_agent --validate                             # Excel <-> code <-> tools consistency check
 python -m workflow_agent --examples                             # run the 10 Test_Questions + 22 scenarios -> examples/outputs/
-python -m pytest                                                # 176 tests
+python -m pytest                                                # 186 tests
 python -m workflow_agent "Where is order ORD-1001?" --json      # machine-readable result
 python -m workflow_agent --workflow WF001 --param threshold=30 x   # skip routing, set parameters explicitly
 ```
@@ -79,6 +79,12 @@ Each provider uses only its own key variable (`OPENAI_API_KEY`, `OPENROUTER_API_
 `LLM_API_KEY`, so one provider's key is never sent to another. For vLLM and other local servers an empty `LLM_MODEL`
 is auto-discovered from `GET /v1/models`. The chosen model must support tool calling for the LLM router to work;
 otherwise the agent falls back to the heuristic router and says so.
+
+Model-supplied tool arguments are only trusted when they are grounded in your message (the text contains them, or a
+file really exists). An invented `inventory.csv` is dropped and the bundled sample or the workflow's own question
+is used instead. Reasoning models (for example `apodex/apodex-1.1-mini:free`) can spend their whole token budget on
+hidden reasoning and return nothing, so the OpenRouter client sends `reasoning: {"enabled": false}` by default; set
+`LLM_REASONING=default` to leave the model's own setting alone.
 
 With an LLM the agent uses **tool calling** to choose the workflow and extract parameters, and uses the model for
 WF004 / WF007 content and low-confidence WF008 keywords. Without one (or if it fails) everything still runs through
@@ -203,13 +209,13 @@ workflow_agent/
   workflows/        wf001 ... wf010 + common helpers
   llm/              OfflineLLM + OpenAI-compatible client (stdlib only)
   formatting.py     text / markdown / JSON renderers      cli.py   command line
-tests/           176 tests            examples/   scenarios + saved outputs        scripts/   sample-log generator
+tests/           186 tests            examples/   scenarios + saved outputs        scripts/   sample-log generator
 docs/            ARCHITECTURE.md, LOOM_SCRIPT.md
 ```
 
 ## Verification and honest limits
 
-* `python -m pytest`: 176 tests, all pass, no network or API key needed. They cover every workflow's rules and edge
+* `python -m pytest`: 186 tests, all pass, no network or API key needed. They cover every workflow's rules and edge
   cases (boundaries such as exactly-10% and stock == minimum), error paths, the Excel loader and startup validation,
   routing, multi-turn clarification, renderers, the CLI, and the 11th-workflow claim.
 * The **LLM code paths were tested against a local fake OpenAI-compatible HTTP server** (real HTTP client, tool-call
