@@ -146,8 +146,11 @@ class WorkflowRouter:
         return tools
 
     SYSTEM = ("You are the workflow router of a business automation agent. Choose exactly ONE function that matches the "
-              "user's request. Fill arguments ONLY with values the user actually stated; omit anything not mentioned - never "
-              "guess file names, ids, dates or goals. If nothing fits, call no_matching_workflow.")
+              "user's request. Every workflow can run on bundled sample data and will itself ask the user for anything it "
+              "still needs, so a missing file path, id, date or other input is NEVER a reason to refuse: pick the matching "
+              "workflow and simply leave that argument out. Fill arguments ONLY with values the user actually stated; never "
+              "guess file names, ids, dates or goals. Call no_matching_workflow ONLY when the request is unrelated to every "
+              "workflow (small talk, general knowledge, other topics).")
 
     def route_llm(self, text: str) -> RouteDecision:
         resp = self.llm.chat([{"role": "system", "content": self.SYSTEM}, {"role": "user", "content": text}],
@@ -162,15 +165,16 @@ class WorkflowRouter:
                     wid = str(data.get("workflow_id", "")).upper()
                     if wid in self.specs:
                         return RouteDecision(wid, 0.7, str(data.get("reason", "chosen by the model (JSON reply)")), "llm-json",
-                                             params=self.coerce_params(wid, data.get("arguments") or {}))
+                                             params=self.ground_params(wid, data.get("arguments") or {}, text)[0])
                 except json.JSONDecodeError:
                     pass
             raise LLMUnavailable("model did not call a workflow tool")
         if call.name == "no_matching_workflow":
             return RouteDecision(None, 0.0, str(call.arguments.get("reason", "model found no matching workflow")), "llm-tool-call")
         spec = by_tool[call.name]
-        return RouteDecision(spec.id, 0.9, f"model selected '{spec.name}' via tool call", "llm-tool-call",
-                             params=self.coerce_params(spec.id, call.arguments))
+        params, dropped = self.ground_params(spec.id, call.arguments, text)
+        return RouteDecision(spec.id, 0.9, f"model selected '{spec.name}' via tool call", "llm-tool-call", params=params,
+                             note=("ignored model arguments not found in your request: " + ", ".join(dropped)) if dropped else "")
 
     # ------------------------------------------------------------------ public API
     def route(self, text: str) -> RouteDecision:
@@ -179,6 +183,14 @@ class WorkflowRouter:
             try:
                 d = self.route_llm(text)
                 d.candidates = heuristic.candidates
+                if d.workflow_id is None and heuristic.workflow_id and not heuristic.ambiguous \
+                        and heuristic.confidence >= self.settings.router_override_score:
+                    # Safety net: some models refuse when an optional input is missing. A strong, unambiguous
+                    # deterministic match wins over a "no workflow" answer; out-of-scope requests score ~0 and stay unmatched.
+                    heuristic.method = "heuristic (LLM said no match)"
+                    heuristic.note = f"LLM answered: {d.reason[:160]}"
+                    heuristic.params = self.fill_params(heuristic.workflow_id, text, {})
+                    return heuristic
                 if d.workflow_id:
                     d.params = self.fill_params(d.workflow_id, text, d.params)
                 return d
@@ -198,6 +210,57 @@ class WorkflowRouter:
                 if v not in (None, [], ""):
                     out[p.name] = v
         return out
+
+    def ground_params(self, workflow_id: str, raw: dict, text: str) -> tuple[dict[str, Any], list[str]]:
+        """Coerce model-supplied arguments and keep only those grounded in the user's message.
+
+        Small models sometimes invent plausible values (a file called 'inventory.csv', an order id that was never
+        mentioned). A value is kept only if it appears in the request, contains digits that all appear in the request
+        (so '1003' -> 'ORD-1003' is fine), or - for file parameters - names a file that really exists.
+        Everything else is dropped and reported; the workflow then uses its default or asks the user."""
+        module = self.registry.get(workflow_id)
+        out: dict[str, Any] = {}
+        dropped: list[str] = []
+        for p in (module.params if module else []):
+            if p.name not in raw:
+                continue
+            v = p.coerce(raw[p.name])
+            if v in (None, [], ""):
+                continue
+            kept = self._keep_grounded(p, v, text)
+            if kept in (None, [], ""):
+                dropped.append(f"{p.name}={raw[p.name]!r}")
+            else:
+                out[p.name] = kept
+        return out, dropped
+
+    def _keep_grounded(self, p, value, text: str):
+        if p.type == "boolean":
+            return value
+        t = " ".join((text or "").lower().split())
+        t_nums = re.findall(r"\d+(?:\.\d+)?", t.replace(",", ""))
+
+        def one(v) -> bool:
+            if p.type in ("number", "integer"):
+                f = float(v)
+                return any(abs(float(n) - f) < 1e-9 for n in t_nums)
+            s = " ".join(str(v).lower().split())
+            if not s:
+                return False
+            if s in t:
+                return True
+            if p.type == "file":
+                try:
+                    return self.settings.resolve(str(v)).is_file()
+                except OSError:
+                    return False
+            digits = re.findall(r"\d+", s)
+            return bool(digits) and all(d in re.findall(r"\d+", t) for d in digits)
+
+        if p.type == "array":
+            kept = [i for i in value if one(i)]
+            return kept
+        return value if one(value) else None
 
     def fill_params(self, workflow_id: str, text: str, have: dict[str, Any]) -> dict[str, Any]:
         """Add values found by the workflows' own extractors for anything the LLM did not supply."""
