@@ -138,8 +138,8 @@ def test_openrouter_defaults_and_headers(tmp_path, monkeypatch):
     c = build_llm(s)
     assert c.base_url == "https://openrouter.ai/api/v1" and c.model == "openai/gpt-4o-mini"
     assert c.extra_headers["X-Title"] == "workflow-agent" and c.extra_headers["HTTP-Referer"] == "https://example.com"
-    s.llm_model = "anthropic/claude-3.5-sonnet"
-    assert build_llm(s).model == "anthropic/claude-3.5-sonnet"
+    s.llm_model = "meta-llama/llama-3.1-70b-instruct"
+    assert build_llm(s).model == "meta-llama/llama-3.1-70b-instruct"
     s.llm_api_key = ""
     assert isinstance(build_llm(s), OfflineLLM)               # key is required for hosted providers
 

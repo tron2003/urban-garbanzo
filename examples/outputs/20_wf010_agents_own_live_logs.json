@@ -31,7 +31,7 @@
     "duration_ms": 3.7,
     "parameters": {
       "live_logs": true,
-      "log_file": "/home/claude/ai-agent-workflow-automation/examples/outputs/execution_log.csv"
+      "log_file": "examples/outputs/execution_log.csv"
     },
     "parameter_sources": {
       "live_logs": "user",

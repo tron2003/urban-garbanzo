@@ -4,7 +4,7 @@
 
 **Selected workflow:** `WF010` - Workflow Performance Report  
 **Routing:** heuristic (confidence 0.48) - matched: performance, logs, report, <live_logs found>  
-**Parameters:** `live_logs=True`, `log_file=/home/claude/ai-agent-workflow-automation/examples/outputs/execution_log.csv`
+**Parameters:** `live_logs=True`, `log_file=examples/outputs/execution_log.csv`
 
 **Steps executed**
 

@@ -5,7 +5,7 @@
  Routing           : heuristic, confidence 0.48
  Why               : matched: performance, logs, report, <live_logs found>
  Runner-up         : WF002 (0.03)
- Parameters        : live_logs=True; log_file=/home/claude/ai-agent-workflow-automation/examples/outputs/…
+ Parameters        : live_logs=True; log_file=examples/outputs/…
 
 Steps executed
   1. [OK  ] Load execution logs  (3 ms)

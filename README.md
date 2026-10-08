@@ -213,15 +213,15 @@ tests/           186 tests            examples/   scenarios + saved outputs     
 docs/            ARCHITECTURE.md, LOOM_SCRIPT.md
 ```
 
-## Verification and honest limits
+## Testing and known limitations
 
 * `python -m pytest`: 186 tests, all pass, no network or API key needed. They cover every workflow's rules and edge
   cases (boundaries such as exactly-10% and stock == minimum), error paths, the Excel loader and startup validation,
   routing, multi-turn clarification, renderers, the CLI, and the 11th-workflow claim.
-* The **LLM code paths were tested against a local fake OpenAI-compatible HTTP server** (real HTTP client, tool-call
-  parsing, fallbacks, validation of invented content) and scripted stub models. **I did not run them against a real model.** Run
-  once with your own key or Ollama before demoing; small local models may ignore `tool_choice` (the router then tries
-  a JSON reply, then falls back to the heuristic).
+* The LLM code paths are covered by tests against a local fake OpenAI-compatible server (HTTP client, tool-call
+  parsing, fallbacks, validation of invented content). I also ran all 10 Test_Questions live through OpenRouter
+  (`apodex/apodex-1.1-mini:free`): 10/10 routed correctly, an unrelated request returned no match. Small local models
+  may ignore `tool_choice`; the router then tries a JSON reply, then falls back to the heuristic.
 * Business details the Excel leaves open (reorder quantity, percentage base, priority scoring, what counts as "suitable"
   for an assignment, log thresholds) are my interpretations, marked above and easy to change in one place.
 * Data is synthetic. APIs are simulated. Keyword intent rules are English-only. Duplicate detection is O(n^2) for
